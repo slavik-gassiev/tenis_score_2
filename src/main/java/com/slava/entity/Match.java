@@ -12,7 +12,7 @@ import lombok.*;
 public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "PlayerOne")
     private Player player1;

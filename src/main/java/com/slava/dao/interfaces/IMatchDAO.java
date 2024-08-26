@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IMatchDAO<T, ID> {
-    ID createMatch(T match);
-    ID deleteMatch(ID uuidMatch);
-    List<T> getAll();
-    Optional<T> getById(ID uuid);
+    Optional<ID> saveMatch(T match);
+    Optional<ID> deleteMatch(ID id);
+    Optional<List<T>> getAll();
+    Optional<T> getById(ID id);
 }
