@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class OngoingMatchDAO implements IOngoingMatchDAO<Match, MatchStateDto, String> {
     @Override
-    public List<Match> getAllMathes() {
+    public Optional<List<Match>> getAllMatches() {
         return null;
     }
 
@@ -19,7 +19,7 @@ public class OngoingMatchDAO implements IOngoingMatchDAO<Match, MatchStateDto, S
     }
 
     @Override
-    public String addMatch(Match match) {
+    public Optional<String> addMatch(Match match) {
         return null;
     }
 

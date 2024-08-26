@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IOngoingMatchDAO<M, DTO, ID> {
-     List<M> getAllMathes();
+     Optional<List<M>> getAllMatches();
      Optional<DTO> getMatchByUUID(ID uuid);
-     ID addMatch(M match);
+     Optional<ID> addMatch(M match);
      void deleteMath(ID uuid);
 }
