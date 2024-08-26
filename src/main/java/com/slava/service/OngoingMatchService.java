@@ -1,10 +1,12 @@
 package com.slava.service;
 
 import com.slava.dto.MatchStateDto;
+import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Data
 public class OngoingMatchService {
     private static OngoingMatchService INSTANCE;
     private OngoingMatchService() {};
