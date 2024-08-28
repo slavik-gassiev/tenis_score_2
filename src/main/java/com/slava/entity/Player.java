@@ -1,5 +1,6 @@
 package com.slava.entity;
 
+import com.slava.service.OngoingMatchService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
