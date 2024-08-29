@@ -20,6 +20,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
         checkDeuce();
         checkTieBreak();
+        checkSetWinner();
 
 
 
@@ -82,6 +83,28 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             resetTieBreak(set);
             resetGame(set);
         }
+    }
+
+    private void checkSetWinner() {
+        if (set.getPlayer1GameScore() >= 6 &&
+                set.getPlayer1GameScore() - set.getPlayer2GameScore() >= 2) {
+            set.setWinner(match.getPlayerOne());
+            finishSet();
+        }
+        else if (set.getPlayer2GameScore() >= 6 &&
+                set.getPlayer2GameScore() - set.getPlayer1GameScore() >= 2) {
+            set.setWinner(match.getPlayerTwo());
+            finishSet();
+        }
+        else if (set.getPlayer1GameScore() == 6 &&
+                set.getPlayer2GameScore() == 6) {
+            match.setIsTieBreak(true);
+            resetGame(set);
+        }
+    }
+
+    private void finishSet() {
+        set.setIsOngoing(false);
     }
 
     private void resetScore(MatchSetDto set) {
