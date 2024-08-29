@@ -87,3 +87,15 @@ _
 /src/main/java/com/slava/util/HibernateUtil.java,1\5\15967f27ee7692b3d1a94ded46e8c83c51aff086
 h
 8src/main/java/com/slava/service/OngoingMatchService.java,6\e\6eed447684124707e0801e5d96472e67e69ff352
+w
+G.idea/sonarlint/issuestore/0/a/0ad941e2877c91ca6bd51a81d21f29a843592907,9\7\9790a5f242e5e7b738a8eeeb2db5ae427960f31a
+w
+G.idea/sonarlint/issuestore/7/8/78dff0f73c637ef18050bb36354fc32477bc604e,c\2\c2d3d6f06056ca0f93ba54b74f4a8ae598359301
+w
+G.idea/sonarlint/issuestore/d/7/d7becbdf94c821e3b4cdb4141d43f32edafaa002,1\3\1326efe9f59d03c19d369c4825afc37dd78ba8d5
+w
+G.idea/sonarlint/issuestore/5/0/504c9aa1e9845cd7e4e9aa676515df30cb687b18,2\c\2c0fac791a318826ae6513f126602493ead43430
+w
+G.idea/sonarlint/issuestore/a/8/a8fd9a771f74cd03c3a1409285ef1f46f90c1fbe,7\5\75903f08973cd20ade448593da0b21000863a683
+q
+Asrc/main/java/com/slava/service/MatchScoreCalculationService.java,c\4\c4b96c7d89d40a0feb8f61b9dc172efa818bc17d
