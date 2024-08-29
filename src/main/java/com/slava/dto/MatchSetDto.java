@@ -1,6 +1,5 @@
 package com.slava.dto;
 
-import com.slava.service.OngoingMatchService;
 import lombok.Data;
 
 @Data
@@ -11,7 +10,7 @@ public class MatchSetDto {
     private int player2GameScore;
 
     private int player1TieBreakScore;
-    private int player12ieBreakScore;
+    private int player2TieBreakScore;
 
     private int player1DeuceScore;
     private int player2DeuceScore;

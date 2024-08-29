@@ -17,7 +17,10 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
         checkMatchAndPlayerOnExist(matchId, player);
         initMatchAndSetDto(matchId);
-        checkDeuce(matchId);
+
+        checkDeuce();
+        checkTieBreak();
+
 
 
         return null;
@@ -51,7 +54,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void checkDeuce(String matchId) {
+    private void checkDeuce() {
         if (set.getPlayer1DeuceScore() >= 2 &&
                 set.getPlayer1DeuceScore() - set.getPlayer2DeuceScore() >= 2) {
             set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
@@ -66,6 +69,21 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
+    private void checkTieBreak() {
+        if (set.getPlayer1TieBreakScore() >= 7 &&
+                set.getPlayer1TieBreakScore() - set.getPlayer2TieBreakScore() >= 2) {
+            set.setPlayer1TieBreakScore(set.getPlayer1TieBreakScore() + 1);
+            resetTieBreak(set);
+            resetGame(set);
+        }
+        else if (set.getPlayer2TieBreakScore() >= 2 &&
+                set.getPlayer2TieBreakScore() - set.getPlayer1TieBreakScore() >= 2) {
+            set.setPlayer2TieBreakScore(set.getPlayer2TieBreakScore() + 1);
+            resetTieBreak(set);
+            resetGame(set);
+        }
+    }
+
     private void resetScore(MatchSetDto set) {
         set.setPlayer1CurrentScore(0);
         set.setPlayer2CurrentScore(0);
@@ -75,6 +93,17 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         set.setPlayer1DeuceScore(0);
         set.setPlayer2DeuceScore(0);
         match.setIsDeuce(false);
+    }
+
+    private void resetTieBreak(MatchSetDto set) {
+        set.setPlayer1TieBreakScore(0);
+        set.setPlayer2TieBreakScore(0);
+        match.setIsTieBreak(false);
+    }
+
+    private void resetGame(MatchSetDto set) {
+        set.setPlayer1GameScore(0);
+        set.setPlayer2GameScore(0);
     }
 
 
