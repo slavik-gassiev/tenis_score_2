@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode
 public class MatchStateDto {
+    private PlayerDto matchWinner;
     private PlayerDto playerOne;
     private PlayerDto playerTwo;
     private MatchTypeDto matchTypeDto;

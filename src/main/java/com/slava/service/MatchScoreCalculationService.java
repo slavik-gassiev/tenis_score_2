@@ -3,6 +3,7 @@ package com.slava.service;
 import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.MatchSetDto;
 import com.slava.dto.MatchStateDto;
+import com.slava.dto.MatchTypeDto;
 import com.slava.dto.PlayerDto;
 
 import java.util.Optional;
@@ -21,10 +22,74 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         checkDeuce();
         checkTieBreak();
         checkSetWinner();
+        checkMatchFinished();
 
-
+        addPoint(player);
 
         return null;
+    }
+
+    private void addPoint(PlayerDto player) {
+        if (match.getIsDeuce()) {
+            addDeucePoint(player);
+        }
+        else if (match.getIsTieBreak()) {
+            addTieBreakPoint(player);
+        }
+        else {
+            addScorePoint(player);
+        }
+    }
+
+    private void addScorePoint(PlayerDto player) {
+        Boolean isPlayer1 = match.getPlayerOne().getName() == player.getName() ? true : false;
+        int playerScoreWinner = isPlayer1 ? set.getPlayer1CurrentScore() : set.getPlayer2CurrentScore();
+        int playerScoreLoser = isPlayer1 ? set.getPlayer2CurrentScore() : set.getPlayer1CurrentScore();
+
+        switch (playerScoreWinner) {
+            case 0:
+                playerScoreWinner = 15;
+                break;
+            case 15:
+                playerScoreWinner = 30;
+                break;
+            case 30:
+                if (40 == playerScoreLoser) {
+                    match.setIsDeuce(true);
+                    resetScore(set);
+                } else {
+                    playerScoreWinner = 40;
+                }
+                break;
+            case 40:
+                if (isPlayer1) {
+                    set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
+                    resetScore(set);
+                } else {
+                    set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
+                    resetScore(set);
+                }
+                return;
+
+        }
+    }
+
+    private void addTieBreakPoint(PlayerDto player) {
+        if (match.getPlayerOne().getName() == player.getName()) {
+            set.setPlayer1TieBreakScore(set.getPlayer1TieBreakScore() + 1);
+        }
+        else if (match.getPlayerTwo().getName() == player.getName()) {
+            set.setPlayer2TieBreakScore(set.getPlayer2TieBreakScore() + 1);
+        }
+    }
+
+    private void addDeucePoint(PlayerDto player) {
+        if (match.getPlayerOne().getName() == player.getName()) {
+            set.setPlayer1DeuceScore(set.getPlayer1DeuceScore() + 1);
+        }
+        else if (match.getPlayerTwo().getName() == player.getName()) {
+            set.setPlayer2DeuceScore(set.getPlayer2DeuceScore() + 1);
+        }
     }
 
     private void checkMatchAndPlayerOnExist(String matchId, PlayerDto player) {
@@ -100,6 +165,28 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
                 set.getPlayer2GameScore() == 6) {
             match.setIsTieBreak(true);
             resetGame(set);
+            resetScore(set);
+        }
+    }
+
+    private void checkMatchFinished() {
+        int playerOneSets = (int) match.getSets().stream()
+                .filter(matchSetDto -> matchSetDto.getWinner() == match.getPlayerOne())
+                .count();
+
+        int playerTwoSets = (int) match.getSets().stream()
+                .filter(matchSetDto -> matchSetDto.getWinner() == match.getPlayerTwo())
+                .count();
+
+        int goal = match.getMatchTypeDto() == MatchTypeDto.SHORT_GAME ? 3 : 6;
+
+        if (playerOneSets == goal){
+            match.setMatchWinner(match.getPlayerOne());
+            match.setIsFinished(true);
+        }
+        else if (playerTwoSets == goal) {
+            match.setMatchWinner(match.getPlayerTwo());
+            match.setIsFinished(true);
         }
     }
 
