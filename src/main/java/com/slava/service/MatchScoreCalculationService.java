@@ -29,7 +29,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         return null;
     }
 
-    private void addPoint(PlayerDto player) {
+    private synchronized void addPoint(PlayerDto player) {
         if (match.getIsDeuce()) {
             addDeucePoint(player);
         }
@@ -41,7 +41,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void addScorePoint(PlayerDto player) {
+    private synchronized void addScorePoint(PlayerDto player) {
         Boolean isPlayer1 = match.getPlayerOne().getName() == player.getName() ? true : false;
         int playerScoreWinner = isPlayer1 ? set.getPlayer1CurrentScore() : set.getPlayer2CurrentScore();
         int playerScoreLoser = isPlayer1 ? set.getPlayer2CurrentScore() : set.getPlayer1CurrentScore();
@@ -56,7 +56,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             case 30:
                 if (40 == playerScoreLoser) {
                     match.setIsDeuce(true);
-                    resetScore(set);
+                    resetScore();
                 } else {
                     playerScoreWinner = 40;
                 }
@@ -64,17 +64,17 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             case 40:
                 if (isPlayer1) {
                     set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
-                    resetScore(set);
+                    resetScore();
                 } else {
                     set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
-                    resetScore(set);
+                    resetScore();
                 }
                 return;
 
         }
     }
 
-    private void addTieBreakPoint(PlayerDto player) {
+    private synchronized void addTieBreakPoint(PlayerDto player) {
         if (match.getPlayerOne().getName() == player.getName()) {
             set.setPlayer1TieBreakScore(set.getPlayer1TieBreakScore() + 1);
         }
@@ -83,7 +83,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void addDeucePoint(PlayerDto player) {
+    private synchronized void addDeucePoint(PlayerDto player) {
         if (match.getPlayerOne().getName() == player.getName()) {
             set.setPlayer1DeuceScore(set.getPlayer1DeuceScore() + 1);
         }
@@ -92,7 +92,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void checkMatchAndPlayerOnExist(String matchId, PlayerDto player) {
+    private synchronized void checkMatchAndPlayerOnExist(String matchId, PlayerDto player) {
         Boolean hasMatch = ongoingMatchService.isMatchExist(matchId);
         Boolean isPlayerInMatch = ongoingMatchService.isPlayerInMatch(matchId, player);
 
@@ -104,7 +104,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void initMatchAndSetDto(String matchId) {
+    private synchronized void initMatchAndSetDto(String matchId) {
         Optional<MatchStateDto> optionalMatch = ongoingMatchDAO.getMatchByUUID(matchId);
 
         if (optionalMatch.isPresent()) {
@@ -120,37 +120,37 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void checkDeuce() {
+    private synchronized void checkDeuce() {
         if (set.getPlayer1DeuceScore() >= 2 &&
                 set.getPlayer1DeuceScore() - set.getPlayer2DeuceScore() >= 2) {
             set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
-            resetDeuce(set);
-            resetScore(set);
+            resetDeuce();
+            resetScore();
         }
         else if (set.getPlayer2DeuceScore() >= 2 &&
                 set.getPlayer2DeuceScore() - set.getPlayer1DeuceScore() >= 2) {
             set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
-            resetDeuce(set);
-            resetScore(set);
+            resetDeuce();
+            resetScore();
         }
     }
 
-    private void checkTieBreak() {
+    private synchronized void checkTieBreak() {
         if (set.getPlayer1TieBreakScore() >= 7 &&
                 set.getPlayer1TieBreakScore() - set.getPlayer2TieBreakScore() >= 2) {
             set.setPlayer1TieBreakScore(set.getPlayer1TieBreakScore() + 1);
-            resetTieBreak(set);
-            resetGame(set);
+            resetTieBreak();
+            resetGame();
         }
         else if (set.getPlayer2TieBreakScore() >= 2 &&
                 set.getPlayer2TieBreakScore() - set.getPlayer1TieBreakScore() >= 2) {
             set.setPlayer2TieBreakScore(set.getPlayer2TieBreakScore() + 1);
-            resetTieBreak(set);
-            resetGame(set);
+            resetTieBreak();
+            resetGame();
         }
     }
 
-    private void checkSetWinner() {
+    private synchronized void checkSetWinner() {
         if (set.getPlayer1GameScore() >= 6 &&
                 set.getPlayer1GameScore() - set.getPlayer2GameScore() >= 2) {
             set.setWinner(match.getPlayerOne());
@@ -164,12 +164,12 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         else if (set.getPlayer1GameScore() == 6 &&
                 set.getPlayer2GameScore() == 6) {
             match.setIsTieBreak(true);
-            resetGame(set);
-            resetScore(set);
+            resetGame();
+            resetScore();
         }
     }
 
-    private void checkMatchFinished() {
+    private synchronized void checkMatchFinished() {
         int playerOneSets = (int) match.getSets().stream()
                 .filter(matchSetDto -> matchSetDto.getWinner() == match.getPlayerOne())
                 .count();
@@ -190,28 +190,28 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private void finishSet() {
+    private synchronized void finishSet() {
         set.setIsOngoing(false);
     }
 
-    private void resetScore(MatchSetDto set) {
+    private synchronized void resetScore() {
         set.setPlayer1CurrentScore(0);
         set.setPlayer2CurrentScore(0);
     }
 
-    private void resetDeuce(MatchSetDto set) {
+    private synchronized void resetDeuce() {
         set.setPlayer1DeuceScore(0);
         set.setPlayer2DeuceScore(0);
         match.setIsDeuce(false);
     }
 
-    private void resetTieBreak(MatchSetDto set) {
+    private synchronized void resetTieBreak() {
         set.setPlayer1TieBreakScore(0);
         set.setPlayer2TieBreakScore(0);
         match.setIsTieBreak(false);
     }
 
-    private void resetGame(MatchSetDto set) {
+    private synchronized void resetGame() {
         set.setPlayer1GameScore(0);
         set.setPlayer2GameScore(0);
     }
