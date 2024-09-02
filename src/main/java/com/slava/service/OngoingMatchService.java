@@ -10,6 +10,7 @@ import java.util.Map;
 @Data
 public class OngoingMatchService {
     private static OngoingMatchService INSTANCE;
+//    обернуть dao  в сервис
     private OngoingMatchService() {};
 
     private volatile Map<String, MatchStateDto> matches = new HashMap<>();
