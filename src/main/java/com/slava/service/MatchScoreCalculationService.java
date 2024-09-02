@@ -5,18 +5,18 @@ import com.slava.dto.*;
 
 import java.util.Optional;
 
-public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchStateDto, String, PlayerDto>{
+public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto>{
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
     private OngoingMatchDAO ongoingMatchDAO = new OngoingMatchDAO();
 //    volatile MatchStateDto match;
 //    volatile MatchSetDto set;
     //рейс кондишейн
     @Override
-    public MatchStateDto toGoal(String matchId, PlayerDto player) {
+    public MatchDto toGoal(String matchId, PlayerDto player) {
 
         checkMatchAndPlayerOnExist(matchId, player);
 
-        MatchStateDto match = null;
+        MatchDto match = null;
         SetDto set = null;
         GameDto game = null;
         DeuceDto deuce = null;
@@ -34,11 +34,11 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         return null;
     }
 
-    private synchronized void addPoint(PlayerDto player, MatchStateDto match, SetDto set, GameDto game, TieBreakDto tieBreak, DeuceDto deuce) {
-        if (match.getIsDeuce()) {
+    private synchronized void addPoint(PlayerDto player, MatchDto match, SetDto set, GameDto game, TieBreakDto tieBreak, DeuceDto deuce) {
+        if (match.getMatchState() == MatchStateDto.DEUCE) {
             addDeucePoint(player, match, deuce);
         }
-        else if (match.getIsTieBreak()) {
+        else if (match.getMatchState() == MatchStateDto.TIE_BREAK) {
             addTieBreakPoint(player, match, tieBreak);
         }
         else {
@@ -46,7 +46,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void addScorePoint(PlayerDto player, MatchStateDto match, SetDto set, GameDto game) {
+    private synchronized void addScorePoint(PlayerDto player, MatchDto match, SetDto set, GameDto game) {
         Boolean isPlayer1 = match.getPlayerOne().getName() == player.getName() ? true : false;
         int playerScoreWinner = isPlayer1 ? game.getPlayer1CurrentScore() : game.getPlayer2CurrentScore();
         int playerScoreLoser = isPlayer1 ? game.getPlayer2CurrentScore() : game.getPlayer1CurrentScore();
@@ -70,7 +70,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
                 break;
             case 30:
                 if (40 == playerScoreLoser) {
-                    match.setIsDeuce(true);
+                    match.setMatchState(MatchStateDto.DEUCE);
                     return;
                 }
                 if (isPlayer1) {
@@ -96,7 +96,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void addTieBreakPoint(PlayerDto player, MatchStateDto match, TieBreakDto tieBreak) {
+    private synchronized void addTieBreakPoint(PlayerDto player, MatchDto match, TieBreakDto tieBreak) {
         if (match.getPlayerOne().getName() == player.getName()) {
             tieBreak.setPlayer1TieBreakScore(tieBreak.getPlayer1TieBreakScore() + 1);
         }
@@ -105,7 +105,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void addDeucePoint(PlayerDto player, MatchStateDto match, DeuceDto deuce) {
+    private synchronized void addDeucePoint(PlayerDto player, MatchDto match, DeuceDto deuce) {
         if (match.getPlayerOne().getName() == player.getName()) {
             deuce.setPlayer1DeuceScore(deuce.getPlayer1DeuceScore() + 1);
         }
@@ -127,9 +127,9 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
     }
 
     private synchronized void initMatchSetGameDeuceTieBreak(
-            String matchId, MatchStateDto match, SetDto set, GameDto game, DeuceDto deuce, TieBreakDto tieBreak
+            String matchId, MatchDto match, SetDto set, GameDto game, DeuceDto deuce, TieBreakDto tieBreak
     ) {
-        Optional<MatchStateDto> optionalMatch = ongoingMatchDAO.getMatchByUUID(matchId);
+        Optional<MatchDto> optionalMatch = ongoingMatchDAO.getMatchByUUID(matchId);
 
         if (optionalMatch.isPresent()) {
             match = optionalMatch.get();
@@ -178,7 +178,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void checkDeuce(MatchStateDto match, SetDto set, GameDto game, DeuceDto deuce) {
+    private synchronized void checkDeuce(MatchDto match, SetDto set, GameDto game, DeuceDto deuce) {
         if (deuce.getPlayer1DeuceScore() >= 2 &&
                 deuce.getPlayer1DeuceScore() - deuce.getPlayer2DeuceScore() >= 2) {
 
@@ -199,7 +199,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void checkTieBreak(MatchStateDto match, SetDto set, TieBreakDto tieBreak) {
+    private synchronized void checkTieBreak(MatchDto match, SetDto set, TieBreakDto tieBreak) {
         if (tieBreak.getPlayer1TieBreakScore() >= 7 &&
                 tieBreak.getPlayer1TieBreakScore() - tieBreak.getPlayer2TieBreakScore() >= 2) {
 
@@ -220,7 +220,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
     }
 
-    private synchronized void checkSetWinner(MatchStateDto match, SetDto set) {
+    private synchronized void checkSetWinner(MatchDto match, SetDto set) {
         if (set.getPlayer1GameScore() >= 6 &&
                 set.getPlayer1GameScore() - set.getPlayer2GameScore() >= 2) {
             set.setSetWinner(match.getPlayerOne());
@@ -235,48 +235,24 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         }
         else if (set.getPlayer1GameScore() == 6 &&
                 set.getPlayer2GameScore() == 6) {
-            match.setIsTieBreak(true);
+            match.setMatchState(MatchStateDto.TIE_BREAK);
         }
     }
 
-    private synchronized void checkMatchFinished(MatchStateDto match) {
-        int goal = match.getMatchTypeDto() == MatchTypeDto.SHORT_GAME ? 3 : 6;
+    private synchronized void checkMatchFinished(MatchDto match) {
+        int goal = match.getMatchType() == MatchTypeDto.SHORT_GAME ? 3 : 6;
 
         if (match.getPlayer1SetsScore() == goal){
             match.setMatchWinner(match.getPlayerOne());
-            match.setIsFinished(true);
+            match.setMatchState(MatchStateDto.FINISHED);
         }
         else if (match.getPlayer2SetsScore() == goal) {
             match.setMatchWinner(match.getPlayerTwo());
-            match.setIsFinished(true);
+            match.setMatchState(MatchStateDto.FINISHED);
         }
     }
 
     private synchronized void finishSet(SetDto set) {
 
     }
-
-    private synchronized void resetScore(SetDto set) {
-        set.setPlayer1CurrentScore(0);
-        set.setPlayer2CurrentScore(0);
-    }
-
-    private synchronized void resetDeuce(MatchStateDto match, SetDto set) {
-        set.setPlayer1DeuceScore(0);
-        set.setPlayer2DeuceScore(0);
-        match.setIsDeuce(false);
-    }
-
-    private synchronized void resetTieBreak(MatchStateDto match, SetDto set) {
-        set.setPlayer1TieBreakScore(0);
-        set.setPlayer2TieBreakScore(0);
-        match.setIsTieBreak(false);
-    }
-
-    private synchronized void resetGame(SetDto set) {
-        set.setPlayer1GameScore(0);
-        set.setPlayer2GameScore(0);
-    }
-
-
 }

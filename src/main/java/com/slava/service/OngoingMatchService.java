@@ -1,6 +1,6 @@
 package com.slava.service;
 
-import com.slava.dto.MatchStateDto;
+import com.slava.dto.MatchDto;
 import com.slava.dto.PlayerDto;
 import lombok.Data;
 
@@ -13,7 +13,7 @@ public class OngoingMatchService {
 //    обернуть dao  в сервис
     private OngoingMatchService() {};
 
-    private volatile Map<String, MatchStateDto> matches = new HashMap<>();
+    private volatile Map<String, MatchDto> matches = new HashMap<>();
 
     public synchronized static OngoingMatchService getInstance() {
         if (INSTANCE == null) {
