@@ -1,15 +1,17 @@
 package com.slava.dto;
 
+import lombok.Data;
+
 import java.util.List;
 
-public class MatchGameDto {
+@Data
+public class GameDto {
     private PlayerDto gameWinner;
 
     private int player1CurrentScore;
     private int player2CurrentScore;
 
-    private int player1DeuceScore;
-    private int player2DeuceScore;
+    private List<DeuceDto> deuces;
 
     private Boolean isOngoing;
 }

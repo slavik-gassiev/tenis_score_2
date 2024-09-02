@@ -1,6 +1,9 @@
 package com.slava.dto;
 
-public class TieBreakScoreDto {
+import lombok.Data;
+
+@Data
+public class TieBreakDto {
     private PlayerDto tieBreakWinner;
 
     private int player1TieBreakScore;

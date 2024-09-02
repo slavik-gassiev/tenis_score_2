@@ -12,7 +12,9 @@ public class MatchStateDto {
     private PlayerDto playerOne;
     private PlayerDto playerTwo;
     private MatchTypeDto matchTypeDto;
-    private List<MatchSetDto> sets;
+    private List<SetDto> sets;
+    private int player1SetsScore;
+    private int player2SetsScore;
 
     private Boolean isDeuce;
     private Boolean isTieBreak;

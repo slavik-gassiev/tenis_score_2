@@ -5,17 +5,17 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class MatchSetDto {
-    private PlayerDto winner;
+public class SetDto {
+    private PlayerDto setWinner;
 
 //    вынести в класс
     private int player1GameScore;
     private int player2GameScore;
-    private List<MatchGameDto> games;
+    private List<GameDto> games;
 
     private int player1TieBreakScore;
     private int player2TieBreakScore;
-    private List<TieBreakScoreDto> tieBreaks;
+    private List<TieBreakDto> tieBreaks;
 
     private int player1DeuceScore;
     private int player2DeuceScore;
