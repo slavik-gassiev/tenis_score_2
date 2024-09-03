@@ -1,11 +1,13 @@
 package com.slava.service;
 
+import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.MatchDto;
 import com.slava.dto.PlayerDto;
 import lombok.Data;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Data
 public class OngoingMatchService {
@@ -13,7 +15,7 @@ public class OngoingMatchService {
 //    обернуть dao  в сервис
     private OngoingMatchService() {};
 
-    private volatile Map<String, MatchDto> matches = new HashMap<>();
+    private OngoingMatchDAO matchDAO = new OngoingMatchDAO();
 
     public synchronized static OngoingMatchService getInstance() {
         if (INSTANCE == null) {
@@ -24,19 +26,21 @@ public class OngoingMatchService {
 
 
     public synchronized Boolean isMatchExist(String matchId) {
-        if (matches.containsKey(matchId)){
+        if (matchDAO.getMatchByUUID(matchId) != null){
             return true;
         }
         return  false;
     }
 
     public Boolean isPlayerInMatch(String matchId, PlayerDto player) {
-        String nameOne = matches.get(matchId).getPlayerOne().getName();
-        String nameTwo = matches.get(matchId).getPlayerTwo().getName();
+        Optional<MatchDto> matchDto = matchDAO.getMatchByUUID(matchId);
 
-        if (nameOne == player.getName() || nameTwo == player.getName()) {
-            return true;
+        if (!(matchDto.isPresent())) {
+            throw new RuntimeException("Данный матч не сушествует");
         }
+        if (matchDto.get().getPlayerOne().getName() == player.getName()) return true;
+        if (matchDto.get().getPlayerTwo().getName() == player.getName()) return true;
+
         return false;
     }
 }

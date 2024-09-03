@@ -8,9 +8,6 @@ import java.util.Optional;
 public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto>{
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
     private OngoingMatchDAO ongoingMatchDAO = new OngoingMatchDAO();
-//    volatile MatchStateDto match;
-//    volatile MatchSetDto set;
-    //рейс кондишейн
     @Override
     public MatchDto toGoal(String matchId, PlayerDto player) {
 
