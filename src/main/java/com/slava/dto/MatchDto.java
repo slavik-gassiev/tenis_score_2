@@ -1,11 +1,13 @@
 package com.slava.dto;
 
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
 @Data
+@Builder
 @EqualsAndHashCode
 public class MatchDto {
     private PlayerDto matchWinner;
@@ -16,8 +18,4 @@ public class MatchDto {
     private List<SetDto> sets;
     private int player1SetsScore;
     private int player2SetsScore;
-
-//    private Boolean isDeuce;
-//    private Boolean isTieBreak;
-//    private Boolean isFinished;
 }

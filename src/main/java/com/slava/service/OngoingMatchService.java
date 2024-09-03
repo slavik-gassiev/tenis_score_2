@@ -5,8 +5,6 @@ import com.slava.dto.MatchDto;
 import com.slava.dto.PlayerDto;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 @Data
@@ -36,11 +34,21 @@ public class OngoingMatchService {
         Optional<MatchDto> matchDto = matchDAO.getMatchByUUID(matchId);
 
         if (!(matchDto.isPresent())) {
-            throw new RuntimeException("Данный матч не сушествует");
+            return false;
         }
         if (matchDto.get().getPlayerOne().getName() == player.getName()) return true;
         if (matchDto.get().getPlayerTwo().getName() == player.getName()) return true;
 
+        return false;
+    }
+
+    public Boolean isPlayerInMatches(String player) {
+        Optional<MatchDto> matchDto = matchDAO.getAllMatches().stream()
+                .filter(matchDto1 -> matchDto1.getPlayerOne().getName() == player ||
+                        matchDto1.getPlayerTwo().getName() == player)
+                .findFirst();
+
+        if (matchDto.isPresent()) return true;
         return false;
     }
 }
