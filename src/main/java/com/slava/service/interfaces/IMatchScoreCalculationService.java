@@ -1,4 +1,4 @@
-package com.slava.service;
+package com.slava.service.interfaces;
 
 public interface IMatchScoreCalculationService <DTO, ID, P>{
     DTO toGoal(ID matchId, P player);

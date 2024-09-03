@@ -42,15 +42,11 @@ Q.idea/sonarlint/securityhotspotstore/5/1/513ab307d4e2c4a00ef538f2082d15d96b84dc
 Å
 Q.idea/sonarlint/securityhotspotstore/a/8/a8fd9a771f74cd03c3a1409285ef1f46f90c1fbe,e\5\e51a31545dd53a89107864fb587f99a18e0fd1fb
 Å
-Q.idea/sonarlint/securityhotspotstore/7/8/78dff0f73c637ef18050bb36354fc32477bc604e,c\d\cd0f1ff07c4bf0e4be7f5be926a9be749a89f2f9
-Å
 Q.idea/sonarlint/securityhotspotstore/d/c/dc1b763d3cee718dc91290ed7beb2c5714cbc8b0,e\0\e0198a4a1e220f654b873b4e3f11324f3bd618e3
 Å
 Q.idea/sonarlint/securityhotspotstore/5/d/5d3467193842c11b27736aa0a0536222dd1db612,2\7\27a1057043a4da94cfd41e863a78bf23d3d9ee29
 w
 G.idea/sonarlint/issuestore/5/d/5d3467193842c11b27736aa0a0536222dd1db612,9\9\99d833054b173834a380dff0f6b782d15ffd7da7
-w
-G.idea/sonarlint/issuestore/c/3/c39348d956e3928de43bddce4f1803f4866fe7da,5\c\5c9b40eaa9291f710593c6ab2acda9dc830b18b5
 w
 G.idea/sonarlint/issuestore/5/1/513ab307d4e2c4a00ef538f2082d15d96b84dc81,d\c\dc51dde5cd19f63bd1c517686081d9bc1d7e3932
 w
@@ -70,8 +66,6 @@ Q.idea/sonarlint/securityhotspotstore/d/7/d7becbdf94c821e3b4cdb4141d43f32edafaa0
 Å
 Q.idea/sonarlint/securityhotspotstore/c/c/cce600d08dd12312251f24d9dce89f3c0f13b7f4,2\7\27fada01bae0522a31a60a4f320f16a30dbb1299
 Å
-Q.idea/sonarlint/securityhotspotstore/c/3/c39348d956e3928de43bddce4f1803f4866fe7da,3\d\3df0e8a0d8b2d020577a063dfbf4e8fb858e7685
-Å
 Q.idea/sonarlint/securityhotspotstore/e/b/eb65fb60e89d006396b06e32107e7c42c7add819,d\6\d6618813bb465ff0f188160c453e364063d0e013
 Å
 Q.idea/sonarlint/securityhotspotstore/5/0/504c9aa1e9845cd7e4e9aa676515df30cb687b18,3\4\344c7d80f08dc1e89cb586f36119f76a7d0b6981
@@ -85,8 +79,6 @@ h
 8src/main/java/com/slava/service/OngoingMatchService.java,6\e\6eed447684124707e0801e5d96472e67e69ff352
 w
 G.idea/sonarlint/issuestore/0/a/0ad941e2877c91ca6bd51a81d21f29a843592907,9\7\9790a5f242e5e7b738a8eeeb2db5ae427960f31a
-w
-G.idea/sonarlint/issuestore/7/8/78dff0f73c637ef18050bb36354fc32477bc604e,c\2\c2d3d6f06056ca0f93ba54b74f4a8ae598359301
 w
 G.idea/sonarlint/issuestore/d/7/d7becbdf94c821e3b4cdb4141d43f32edafaa002,1\3\1326efe9f59d03c19d369c4825afc37dd78ba8d5
 w
@@ -105,3 +97,11 @@ Y
 )src/main/java/com/slava/dto/MatchDto.java,3\7\37f5fa366cd8803bd8de1eadb9843090d9dcb239
 W
 'src/main/java/com/slava/dto/SetDto.java,b\8\b8467a4d6f913724100aac385f52bcf11c636b6a
+M
+src/main/webapp/new-match.jsp,1\0\1041f8c1433fa91fb8894c39178faa87f93f6901
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+d
+4src/main/java/com/slava/servlet/NewMatchServlet.java,a\6\a6c621771a7cc0113063af3ac60a86eb47be39f6
+d
+4src/main/java/com/slava/service/NewMatchService.java,b\0\b0aaf7668fec21dba6c7aa84d12f8a83094abbdf

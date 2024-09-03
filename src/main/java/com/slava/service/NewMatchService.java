@@ -4,11 +4,14 @@ import com.slava.dto.MatchDto;
 import com.slava.dto.MatchStateDto;
 import com.slava.dto.MatchTypeDto;
 import com.slava.dto.PlayerDto;
+import com.slava.service.interfaces.INewMatchService;
 
-public class NewMatchService {
+import java.util.Optional;
+
+public class NewMatchService implements INewMatchService<MatchDto, String, MatchTypeDto> {
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
 
-    public MatchDto initMatch(String player1, String player2, MatchTypeDto matchType) {
+    public Optional<MatchDto> initMatch(String player1, String player2, MatchTypeDto matchType) {
         if (ongoingMatchService.isPlayerInMatches(player1)) {
             throw new RuntimeException("Игрок " +player1 +" уже играет в другом матче!");
         }
@@ -24,12 +27,12 @@ public class NewMatchService {
                 .name(player2)
                 .build();
 
-        return MatchDto.builder()
+        return Optional.of(MatchDto.builder()
                 .playerOne(playerDto1)
                 .playerTwo(playerDto2)
                 .matchType(matchType)
                 .matchState(MatchStateDto.ONGOING)
-                .build();
+                .build());
 
     }
 }

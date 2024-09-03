@@ -23,11 +23,21 @@ public class OngoingMatchService {
     }
 
 
-    public synchronized Boolean isMatchExist(String matchId) {
+    public  Boolean isMatchExist(String matchId) {
         if (matchDAO.getMatchByUUID(matchId) != null){
             return true;
         }
         return  false;
+    }
+
+    public String addMatchToTrack(Optional<MatchDto> matchDto) {
+        if(matchDto.isPresent()) {
+           Optional<String> uuid =  matchDAO.addMatch(matchDto.get());
+           return uuid.get();
+        }
+        else {
+            throw new RuntimeException("не удалось сохранить матч в трек лист");
+        }
     }
 
     public Boolean isPlayerInMatch(String matchId, PlayerDto player) {

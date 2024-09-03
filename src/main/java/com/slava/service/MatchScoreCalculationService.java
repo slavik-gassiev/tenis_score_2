@@ -2,10 +2,11 @@ package com.slava.service;
 
 import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.*;
+import com.slava.service.interfaces.IMatchScoreCalculationService;
 
 import java.util.Optional;
 
-public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto>{
+public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto> {
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
     private OngoingMatchDAO ongoingMatchDAO = new OngoingMatchDAO();
     @Override
