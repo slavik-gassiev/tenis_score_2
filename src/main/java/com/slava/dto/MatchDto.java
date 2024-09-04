@@ -1,5 +1,7 @@
 package com.slava.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +12,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 public class MatchDto {
+    @JsonIgnore
     private PlayerDto matchWinner;
     private PlayerDto playerOne;
     private PlayerDto playerTwo;

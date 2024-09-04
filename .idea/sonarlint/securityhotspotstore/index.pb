@@ -25,8 +25,6 @@ Y
 )src/main/java/com/slava/dao/MatchDAO.java,f\9\f9e9cc90297738088887e6c6e0b0be7f199575d9
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-r
-Bsrc/main/java/com/slava/service/IMatchScoreCalculationService.java,e\d\ed6ea5fce0d28bacb2b2748afba3f474602d6313
 Å
 Q.idea/sonarlint/securityhotspotstore/f/9/f9e9cc90297738088887e6c6e0b0be7f199575d9,4\4\444c11424f1e603063ba9b5448795eb5b3206f22
 S
@@ -105,3 +103,11 @@ d
 4src/main/java/com/slava/servlet/NewMatchServlet.java,a\6\a6c621771a7cc0113063af3ac60a86eb47be39f6
 d
 4src/main/java/com/slava/service/NewMatchService.java,b\0\b0aaf7668fec21dba6c7aa84d12f8a83094abbdf
+}
+Msrc/main/java/com/slava/service/interfaces/IMatchScoreCalculationService.java,e\1\e107728538e14e092a4a9d71771e5cedf0f76a7c
+f
+6src/main/java/com/slava/service/ValidationService.java,9\2\926210ca7e810430c507aa7d93e0541865ce090d
+p
+@src/main/java/com/slava/service/interfaces/INewMatchService.java,b\b\bb0ecbefd9b527f90055844f64c3800eb440b4b7
+h
+8src/main/java/com/slava/servlet/OngoingMatchServlet.java,4\8\48bbd7ba80229da7d69657f4f62ce7bbaea97f01

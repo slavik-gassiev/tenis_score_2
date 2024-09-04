@@ -40,6 +40,16 @@ public class OngoingMatchService {
         }
     }
 
+    public MatchDto getMatch(String uuid) {
+        Optional<MatchDto> matchDto = matchDAO.getMatchByUUID(uuid);
+        if(matchDto.isPresent()) {
+            return matchDto.get();
+        }
+        else {
+            throw new RuntimeException("Не удаеться получить матч из базы данных");
+        }
+    }
+
     public Boolean isPlayerInMatch(String matchId, PlayerDto player) {
         Optional<MatchDto> matchDto = matchDAO.getMatchByUUID(matchId);
 
