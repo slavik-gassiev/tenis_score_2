@@ -155,9 +155,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             throw new RuntimeException("Данный гейм не сушествует");
         }
 
-        Optional<TieBreakDto> optionalTieBreakDto = set.getTieBreaks().stream()
-                .filter(tieBreakDto -> tieBreakDto.getIsOngoing() == true)
-                .findFirst();
+        Optional<TieBreakDto> optionalTieBreakDto = Optional.ofNullable(set.getTieBreak());
 
         if (optionalTieBreakDto.isPresent()) {
             tieBreak = optionalTieBreakDto.get();
@@ -165,9 +163,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             throw new RuntimeException("Данный тай-брейк не сушествует");
         }
 
-        Optional<DeuceDto> optionalDeuceDto = game.getDeuces().stream()
-                .filter(deuceDto -> deuceDto.getIsOngoing() == true)
-                .findFirst();
+        Optional<DeuceDto> optionalDeuceDto = Optional.ofNullable(game.getDeuce());
 
         if (optionalDeuceDto.isPresent()) {
             deuce = optionalDeuceDto.get();
@@ -207,8 +203,8 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             set.setIsOngoing(false);
             match.setPlayer1SetsScore(match.getPlayer1SetsScore() + 1);
         }
-        else if (set.getPlayer2TieBreakScore() >= 7 &&
-                set.getPlayer2TieBreakScore() - set.getPlayer1TieBreakScore() >= 2) {
+        else if (tieBreak.getPlayer2TieBreakScore() >= 7 &&
+                tieBreak.getPlayer2TieBreakScore() - tieBreak.getPlayer1TieBreakScore() >= 2) {
 
             tieBreak.setTieBreakWinner(match.getPlayerTwo());
             tieBreak.setIsOngoing(false);

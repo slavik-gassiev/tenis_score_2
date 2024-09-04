@@ -1,8 +1,10 @@
 package com.slava.servlet;
 
 import com.slava.dto.MatchDto;
+import com.slava.dto.TableDto;
 import com.slava.service.OngoingMatchService;
 import com.slava.service.ValidationService;
+import com.slava.util.MapperUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Optional;
 
 public class OngoingMatchServlet extends HttpServlet {
     @Override
@@ -22,6 +25,7 @@ public class OngoingMatchServlet extends HttpServlet {
 
         validationService.isUuidCorrect(ongoingMatchService, uuid);
         MatchDto matchDto = ongoingMatchService.getMatch(uuid);
+        TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
         req.setAttribute("match", matchDto);
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
 
