@@ -1,12 +1,12 @@
 package com.slava.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -21,4 +21,9 @@ public class MatchDto {
     private List<SetDto> sets;
     private int player1SetsScore;
     private int player2SetsScore;
+
+    public void deleteOngoingSet() {
+        this.sets.removeIf(setDto -> setDto.getIsOngoing() == true);
+    }
+
 }

@@ -4,6 +4,7 @@ import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.*;
 import com.slava.service.interfaces.IMatchScoreCalculationService;
 
+import java.util.List;
 import java.util.Optional;
 
 public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto> {
@@ -29,7 +30,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
         addPoint(player, match, set, game, tieBreak, deuce);
 
-        return null;
+        return initMatchDto(match, set, game, deuce, tieBreak);
     }
 
     private synchronized void addPoint(PlayerDto player, MatchDto match, SetDto set, GameDto game, TieBreakDto tieBreak, DeuceDto deuce) {
@@ -248,5 +249,20 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
     private synchronized void finishSet(SetDto set) {
 
+    }
+
+    private MatchDto initMatchDto(MatchDto match, SetDto set, GameDto game, DeuceDto deuce, TieBreakDto tieBreak) {
+        match.deleteOngoingSet();
+        set.deleteOngoingGame();
+
+        List<GameDto> newGames = set.getGames();
+        newGames.add(game);
+        set.setGames(newGames);
+
+        List<SetDto> newSets = match.getSets();
+        newSets.add(set);
+        match.setSets(newSets);
+
+        return match;
     }
 }

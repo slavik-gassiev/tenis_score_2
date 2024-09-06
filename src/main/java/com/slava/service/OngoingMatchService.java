@@ -71,4 +71,19 @@ public class OngoingMatchService {
         if (matchDto.isPresent()) return true;
         return false;
     }
+
+    public PlayerDto getPointWinner(String point, String uuid) {
+        Optional<MatchDto> optionalMatchDto = matchDAO.getMatchByUUID(uuid);
+        if (optionalMatchDto.isPresent()) {
+            if (point.equals("player1")) {
+                return optionalMatchDto.get().getPlayerOne();
+            }
+            else {
+                return optionalMatchDto.get().getPlayerTwo();
+            }
+        }
+        else {
+            throw new RuntimeException("Матч не сушествует для данного победителя");
+        }
+    }
 }

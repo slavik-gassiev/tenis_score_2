@@ -109,3 +109,9 @@ p
 @src/main/java/com/slava/service/interfaces/INewMatchService.java,b\b\bb0ecbefd9b527f90055844f64c3800eb440b4b7
 h
 8src/main/java/com/slava/servlet/OngoingMatchServlet.java,4\8\48bbd7ba80229da7d69657f4f62ce7bbaea97f01
+O
+src/main/webapp/match-score.jsp,5\f\5ffac691e70824ea8e838c5b39a2ead405a1a8b9
+Y
+)src/main/java/com/slava/dto/TableDto.java,a\0\a0cc754f246e0ee882abadba9c4be8a082227ef4
+\
+,src/main/java/com/slava/util/MapperUtil.java,a\a\aa649e5025a4dca0bbd9f859f96c1e558b0d9b28

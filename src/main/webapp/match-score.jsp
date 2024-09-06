@@ -27,29 +27,29 @@
         </thead>
         <tbody>
         <tr>
-            <th>${matc.playerOne.name}
+            <th>${match.player1}
                 <hr>
-                ${matc.playerTwo.name}</th>
+                ${match.player2}</th>
 
-            <td>${match}
+            <td>${match.player1Score}
                 <hr>
-                ${p2score}</td>
+                ${match.player2Score}</td>
 
-            <td>${p1deuce}
+            <td>${match.player1Deuce}
                 <hr>
-                ${p2deuce}</td>
+                ${match.player2Deuce}</td>
 
-            <td>${p1game}
+            <td>${match.player1Game}
                 <hr>
-                ${p2game}</td>
+                ${match.player2Game}</td>
 
-            <td>${p1TieBreak}
+            <td>${match.player1TB}
                 <hr>
-                ${p2TieBreak}</td>
+                ${match.player2TB}</td>
 
-            <td>${p1set}
+            <td>${match.plater1Set}
                 <hr>
-                ${p2set}</td>
+                ${match.player2Set}</td>
 
         </tr>
         </tbody>
@@ -57,8 +57,8 @@
 
     <div style="margin-top: 2vh;">
         <form action="match-score?uuid=${uuid}" method="post" name="scoredform">
-            <button  name ="point_winner" value="p1">${p1name.name} scored!</button>
-            <button name="point_winner" value="p2">${p2name.name} scored!</button>
+            <button  name ="point_winner" value="player1">${match.player1} scored!</button>
+            <button name="point_winner" value="player2">${match.player2} scored!</button>
         </form>
     </div>
 </div>

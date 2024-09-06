@@ -9,13 +9,13 @@ import java.util.List;
 @Builder
 public class SetDto {
     private PlayerDto setWinner;
-
     private List<GameDto> games;
     private TieBreakDto tieBreak;
-
     private int player1GameScore;
     private int player2GameScore;
-
-
     private Boolean isOngoing;
+
+    public void deleteOngoingGame() {
+        this.games.removeIf(gameDto -> gameDto.getIsOngoing() == true);
+    }
 }
