@@ -2,6 +2,7 @@ package com.slava.service;
 
 import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.MatchDto;
+import com.slava.dto.MatchStateDto;
 import com.slava.dto.PlayerDto;
 import lombok.Data;
 
@@ -85,5 +86,20 @@ public class OngoingMatchService {
         else {
             throw new RuntimeException("Матч не сушествует для данного победителя");
         }
+    }
+
+    public void refreshMatch(String uuid, MatchDto calculatedMatch) {
+        try {
+            matchDAO.updateMatch(uuid, calculatedMatch);
+        } catch (Exception e) {
+            throw new RuntimeException("не удалось обновить матч" + e);
+        }
+    }
+
+    public Boolean isMatchFinished(String uuid) {
+        if (matchDAO.getMatchByUUID(uuid).get().getMatchState() == MatchStateDto.FINISHED) {
+            return true;
+        }
+        return false;
     }
 }

@@ -3,6 +3,7 @@ package com.slava.service;
 import java.rmi.RemoteException;
 
 public class ValidationService {
+    OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
     public void checkParameterForNewGame(String player1, String player2, String matchType) {
         if (player1.isBlank() || player2.isBlank() || matchType.isBlank()) {
             throw new RuntimeException("вы не ввели данные");
@@ -12,7 +13,7 @@ public class ValidationService {
         }
     }
 
-    public void isUuidCorrect(OngoingMatchService ongoingMatchService, String uuid) throws RemoteException {
+    public void isUuidCorrect(String uuid) throws RemoteException {
         if(uuid.isBlank()) {
             throw new RemoteException("Uuid не верный!");
         }

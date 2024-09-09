@@ -3,6 +3,7 @@ package com.slava.servlet;
 import com.slava.dto.MatchDto;
 import com.slava.dto.PlayerDto;
 import com.slava.dto.TableDto;
+import com.slava.dto.WinnerDto;
 import com.slava.service.MatchScoreCalculationService;
 import com.slava.service.OngoingMatchService;
 import com.slava.service.ValidationService;
@@ -27,12 +28,15 @@ public class OngoingMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uuid = req.getParameter("uuid");
-
-
-        validationService.isUuidCorrect(ongoingMatchService, uuid);
+        validationService.isUuidCorrect(uuid);
         MatchDto matchDto = ongoingMatchService.getMatch(uuid);
         TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
-        req.setAttribute("match", matchDto);
+        if (ongoingMatchService.isMatchFinished(uuid)) {
+            WinnerDto winnerDto = MapperUtil.mapToWinnerDto(matchDto);
+            req.setAttribute("winner", winnerDto);
+            req.getRequestDispatcher("/match-result.jsp").forward(req, resp);
+        }
+        req.setAttribute("match", tableDto);
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
 
@@ -41,7 +45,9 @@ public class OngoingMatchServlet extends HttpServlet {
         String uuid = req.getParameter("uuid");
         String point = req.getParameter("point_winner");
         PlayerDto playerDto = ongoingMatchService.getPointWinner(point, uuid);
-        matchScoreCalculationService.toGoal(uuid, playerDto);
-
+        MatchDto calculatedMatch = matchScoreCalculationService.toGoal(uuid, playerDto);
+        ongoingMatchService.refreshMatch(uuid, calculatedMatch);
+        String redirect = String.format("/tenis_score_war_exploded/match-score?uuid=%s", uuid);
+        resp.sendRedirect(redirect);
     }
 }

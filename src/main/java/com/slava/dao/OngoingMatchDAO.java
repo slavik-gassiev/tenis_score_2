@@ -34,6 +34,10 @@ public class OngoingMatchDAO implements IOngoingMatchDAO<MatchDto, String> {
         return Optional.ofNullable(uuid);
     }
 
+    public void updateMatch(String uuid, MatchDto match) {
+        matches.replace(uuid, match);
+    }
+
     @Override
     public void deleteMath(String uuid) {
         matches.remove(uuid);

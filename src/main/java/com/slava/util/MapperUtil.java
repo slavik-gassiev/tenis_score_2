@@ -78,6 +78,24 @@ public class MapperUtil {
         };
 
         modelMapper.addMappings(matchToTableMap);
+
+        PropertyMap<MatchDto, WinnerDto> matchToWinnerMap = new PropertyMap<MatchDto, WinnerDto>() {
+            protected void configure() {
+                // Маппинг имен игроков и победителя
+                map().setMatchWinnerName(source.getMatchWinner().getName());
+                map().setPlayer1Name(source.getPlayerOne().getName());
+                map().setPlayer2Name(source.getPlayerTwo().getName());
+
+                // Маппинг счета по сетам
+                map().setPlayer1SetsScore(source.getPlayer1SetsScore());
+                map().setPlayer2SetsScore(source.getPlayer2SetsScore());
+
+                // Маппинг списка сетов
+                map().setSets(source.getSets());
+            }
+        };
+
+        modelMapper.addMappings(matchToWinnerMap);
     }
 
     public static TableDto mapToTableDto(MatchDto matchDto) {
@@ -87,6 +105,16 @@ public class MapperUtil {
         }
         else  {
             throw new RuntimeException("Не удалось перевести MatchDto в TableDto");
+        }
+    }
+
+    public static WinnerDto mapToWinnerDto(MatchDto matchDto) {
+        Optional<WinnerDto> winnerDto = Optional.of(modelMapper.map(matchDto, WinnerDto.class));
+        if (winnerDto.isPresent()) {
+            return winnerDto.get();
+        }
+        else  {
+            throw new RuntimeException("Не удалось перевести MatchDto в WinnerDto");
         }
     }
 }
