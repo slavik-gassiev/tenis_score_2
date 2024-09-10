@@ -115,3 +115,7 @@ O
 src/main/webapp/match-score.jsp,5\f\5ffac691e70824ea8e838c5b39a2ead405a1a8b9
 Y
 )src/main/java/com/slava/dto/TableDto.java,a\0\a0cc754f246e0ee882abadba9c4be8a082227ef4
+P
+ src/main/webapp/match-result.jsp,f\0\f052e2d4f5e34aaf3c5145aff031e209bf6949a1
+Z
+*src/main/java/com/slava/dto/WinnerDto.java,0\0\007541026564e9cefc02b55af350458731e47f0b

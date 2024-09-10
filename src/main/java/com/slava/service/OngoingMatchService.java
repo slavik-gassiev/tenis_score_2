@@ -102,4 +102,8 @@ public class OngoingMatchService {
         }
         return false;
     }
+
+    public void deleteMatchFromTrack(String uuid) {
+        matchDAO.deleteMath(uuid);
+    }
 }

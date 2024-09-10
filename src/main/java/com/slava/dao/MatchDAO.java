@@ -49,13 +49,9 @@ public class MatchDAO implements IMatchDAO<Match, Long> {
     }
 
     @Override
-    public Optional<List<Match>> getAll() {
-        try {
+    public List<Match> getAll() {
             Session session = HibernateUtil.getSessionFactory().openSession();
-            return Optional.ofNullable(session.createQuery("select m from Match m", Match.class).getResultList());
-        } catch (Exception e) {
-            return Optional.empty();
-        }
+            return session.createQuery("select m from Match m", Match.class).getResultList();
     }
 
     @Override

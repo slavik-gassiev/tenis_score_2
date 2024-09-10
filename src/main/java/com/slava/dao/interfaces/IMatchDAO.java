@@ -6,6 +6,6 @@ import java.util.Optional;
 public interface IMatchDAO<T, ID> {
     Optional<ID> saveMatch(T match);
     Optional<ID> deleteMatch(ID id);
-    Optional<List<T>> getAll();
+    List<T> getAll();
     Optional<T> getById(ID id);
 }

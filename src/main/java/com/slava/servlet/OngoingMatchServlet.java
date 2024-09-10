@@ -5,6 +5,7 @@ import com.slava.dto.PlayerDto;
 import com.slava.dto.TableDto;
 import com.slava.dto.WinnerDto;
 import com.slava.service.MatchScoreCalculationService;
+import com.slava.service.NewMatchService;
 import com.slava.service.OngoingMatchService;
 import com.slava.service.ValidationService;
 import com.slava.util.MapperUtil;
@@ -19,9 +20,10 @@ import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Optional;
 
-@WebServlet(name = "OngoingMatchServlet", value = "/match-score")
+@WebServlet(name = "OngoingMatchServlet", value = "/ongoing")
 public class OngoingMatchServlet extends HttpServlet {
     OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
+    NewMatchService newMatchService = new NewMatchService();
     MatchScoreCalculationService matchScoreCalculationService = new MatchScoreCalculationService();
     ValidationService validationService = new ValidationService();
 
@@ -30,12 +32,16 @@ public class OngoingMatchServlet extends HttpServlet {
         String uuid = req.getParameter("uuid");
         validationService.isUuidCorrect(uuid);
         MatchDto matchDto = ongoingMatchService.getMatch(uuid);
-        TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
+//        если матч закончился
         if (ongoingMatchService.isMatchFinished(uuid)) {
             WinnerDto winnerDto = MapperUtil.mapToWinnerDto(matchDto);
+            newMatchService.addMatchToDB(winnerDto);
+            ongoingMatchService.deleteMatchFromTrack(uuid);
             req.setAttribute("winner", winnerDto);
             req.getRequestDispatcher("/match-result.jsp").forward(req, resp);
         }
+//        если матч не закончился
+        TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
         req.setAttribute("match", tableDto);
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
@@ -47,7 +53,7 @@ public class OngoingMatchServlet extends HttpServlet {
         PlayerDto playerDto = ongoingMatchService.getPointWinner(point, uuid);
         MatchDto calculatedMatch = matchScoreCalculationService.toGoal(uuid, playerDto);
         ongoingMatchService.refreshMatch(uuid, calculatedMatch);
-        String redirect = String.format("/tenis_score_war_exploded/match-score?uuid=%s", uuid);
+        String redirect = String.format("/tenis_score_war_exploded/ongoing?uuid=%s", uuid);
         resp.sendRedirect(redirect);
     }
 }

@@ -1,14 +1,17 @@
 package com.slava.service;
 
-import com.slava.dto.MatchDto;
-import com.slava.dto.MatchStateDto;
-import com.slava.dto.MatchTypeDto;
-import com.slava.dto.PlayerDto;
+import com.slava.dao.MatchDAO;
+import com.slava.dao.interfaces.IMatchDAO;
+import com.slava.dto.*;
+import com.slava.entity.Match;
+import com.slava.entity.Player;
 import com.slava.service.interfaces.INewMatchService;
 
 import java.util.Optional;
 
 public class NewMatchService implements INewMatchService<MatchDto, String, MatchTypeDto> {
+
+    IMatchDAO matchDAO = new MatchDAO();
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
 
     public Optional<MatchDto> initMatch(String player1, String player2, MatchTypeDto matchType) {
@@ -34,5 +37,29 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
                 .matchState(MatchStateDto.ONGOING)
                 .build());
 
+    }
+
+    public void addMatchToDB(WinnerDto winnerDto) {
+        Player winner = Player.builder()
+                .name(winnerDto.getMatchWinnerName())
+                .build();
+        Player playerOne = Player.builder()
+                .name(winnerDto.getPlayer1Name())
+                .build();
+        Player playerTwo = Player.builder()
+                .name(winnerDto.getPlayer2Name())
+                .build();
+
+        Match match = Match.builder()
+                .winner(winner)
+                .player1(playerOne)
+                .player2(playerTwo)
+                .build();
+
+        try {
+            matchDAO.saveMatch(match);
+        } catch (Exception e) {
+            throw new RuntimeException("Не удалось сохранить матч в базу Hibernate" + e);
+        }
     }
 }
