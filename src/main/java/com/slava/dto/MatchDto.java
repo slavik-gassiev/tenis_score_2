@@ -25,5 +25,8 @@ public class MatchDto {
     public void deleteOngoingSet() {
         this.sets.removeIf(setDto -> setDto.getIsOngoing() == true);
     }
+    public SetDto getOngoingSet() {
+        return sets.stream().filter(SetDto::getIsOngoing).findFirst().get();
+    }
 
 }

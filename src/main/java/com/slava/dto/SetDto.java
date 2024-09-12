@@ -18,4 +18,7 @@ public class SetDto {
     public void deleteOngoingGame() {
         this.games.removeIf(gameDto -> gameDto.getIsOngoing() == true);
     }
+    public GameDto getOngoingGame() {
+        return games.stream().filter(GameDto::getIsOngoing).findFirst().get();
+    }
 }

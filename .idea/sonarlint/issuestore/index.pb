@@ -119,3 +119,11 @@ P
  src/main/webapp/match-result.jsp,f\0\f052e2d4f5e34aaf3c5145aff031e209bf6949a1
 Z
 *src/main/java/com/slava/dto/WinnerDto.java,0\0\007541026564e9cefc02b55af350458731e47f0b
+O
+src/main/webapp/all-matches.jsp,6\6\66852e9a43cf1c69a72ac34e8bc9e478feacd535
+f
+6src/main/java/com/slava/service/AllMatchesService.java,2\0\2089b6c59a82fcad88da520fb03658c3a551f4c8
+f
+6src/main/java/com/slava/servlet/AllMatchesServlet.java,0\1\01ab5484401d71b75201aef92ebcc1a0a3b2ef0e
+I
+src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded

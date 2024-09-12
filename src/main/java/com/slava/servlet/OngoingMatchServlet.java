@@ -53,7 +53,7 @@ public class OngoingMatchServlet extends HttpServlet {
         PlayerDto playerDto = ongoingMatchService.getPointWinner(point, uuid);
         MatchDto calculatedMatch = matchScoreCalculationService.toGoal(uuid, playerDto);
         ongoingMatchService.refreshMatch(uuid, calculatedMatch);
-        String redirect = String.format("/tenis_score_war_exploded/ongoing?uuid=%s", uuid);
+        String redirect = String.format("/tenis_score/ongoing?uuid=%s", uuid);
         resp.sendRedirect(redirect);
     }
 }

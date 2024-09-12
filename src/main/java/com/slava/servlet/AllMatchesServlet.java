@@ -1,6 +1,7 @@
 package com.slava.servlet;
 
 import com.slava.dto.TableDto;
+import com.slava.dto.WinnerDto;
 import com.slava.service.AllMatchesService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,7 +17,7 @@ public class AllMatchesServlet extends HttpServlet {
     AllMatchesService allMatchesService = new AllMatchesService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<TableDto> matches = allMatchesService.getAllMatches();
+        List<WinnerDto> matches = allMatchesService.getAllMatches();
         req.setAttribute("matches", matches);
         req.getRequestDispatcher("/all-matches.jsp").forward(req, resp);
     }

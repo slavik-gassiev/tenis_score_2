@@ -47,7 +47,7 @@
                 <hr>
                 ${match.player2TB}</td>
 
-            <td>${match.plater1Set}
+            <td>${match.player1Set}
                 <hr>
                 ${match.player2Set}</td>
 

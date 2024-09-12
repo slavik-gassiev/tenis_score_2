@@ -7,6 +7,8 @@ import com.slava.entity.Match;
 import com.slava.entity.Player;
 import com.slava.service.interfaces.INewMatchService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class NewMatchService implements INewMatchService<MatchDto, String, MatchTypeDto> {
@@ -22,6 +24,39 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
             throw new RuntimeException("Игрок " +player2 +" уже играет в другом матче!");
         }
 
+        TieBreakDto tieBreakDto = TieBreakDto.builder()
+                .isOngoing(false)
+                .player1TieBreakScore(0)
+                .player2TieBreakScore(0)
+                .build();
+
+        DeuceDto deuceDto = DeuceDto.builder()
+                .isOngoing(false)
+                .player1DeuceScore(0)
+                .player2DeuceScore(0)
+                .build();
+
+        List<GameDto> gameDtoList = new ArrayList<>();
+        gameDtoList.add(GameDto.builder()
+                .isOngoing(true)
+                .player1CurrentScore(0)
+                .player2CurrentScore(0)
+                        .deuce(deuceDto)
+                .build());
+
+        SetDto setDto = SetDto.builder()
+                .isOngoing(true)
+                .player1GameScore(0)
+                .player2GameScore(0)
+                .games(gameDtoList)
+                .tieBreak(tieBreakDto)
+                .build();
+
+        List<SetDto> setDtoList = new ArrayList<>();
+        setDtoList.add(setDto);
+
+
+
         PlayerDto playerDto1 = PlayerDto.builder()
                 .name(player1)
                 .build();
@@ -35,6 +70,7 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
                 .playerTwo(playerDto2)
                 .matchType(matchType)
                 .matchState(MatchStateDto.ONGOING)
+                        .sets(setDtoList)
                 .build());
 
     }
