@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Builder
@@ -19,6 +20,11 @@ public class SetDto {
         this.games.removeIf(gameDto -> gameDto.getIsOngoing() == true);
     }
     public GameDto getOngoingGame() {
-        return games.stream().filter(GameDto::getIsOngoing).findFirst().get();
+         Optional<GameDto> game = games.stream().filter(GameDto::getIsOngoing).findFirst();
+         if (game.isPresent()) {
+             return game.get();
+         } else {
+             throw new RuntimeException("Все геймы завершины");
+         }
     }
 }

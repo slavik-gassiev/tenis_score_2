@@ -16,7 +16,7 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
     IMatchDAO matchDAO = new MatchDAO();
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
 
-    public Optional<MatchDto> initMatch(String player1, String player2, MatchTypeDto matchType) {
+    public MatchDto initMatch(String player1, String player2, MatchTypeDto matchType) {
         if (ongoingMatchService.isPlayerInMatches(player1)) {
             throw new RuntimeException("Игрок " +player1 +" уже играет в другом матче!");
         }
@@ -24,25 +24,25 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
             throw new RuntimeException("Игрок " +player2 +" уже играет в другом матче!");
         }
 
-        TieBreakDto tieBreakDto = TieBreakDto.builder()
-                .isOngoing(false)
-                .player1TieBreakScore(0)
-                .player2TieBreakScore(0)
-                .build();
+        SetDto setDto = initSet();
 
-        DeuceDto deuceDto = DeuceDto.builder()
-                .isOngoing(false)
-                .player1DeuceScore(0)
-                .player2DeuceScore(0)
-                .build();
+        PlayerDto playerDto1 = initPlayer(player1);
+
+        PlayerDto playerDto2 = initPlayer(player2);
+
+        return initNewMatch(matchType,playerDto1, playerDto2);
+
+    }
+
+    public SetDto initSet() {
+        TieBreakDto tieBreakDto = initTieBreak();
+
+        DeuceDto deuceDto = initDeuce();
+
+        GameDto gameDto = initGame(deuceDto);
 
         List<GameDto> gameDtoList = new ArrayList<>();
-        gameDtoList.add(GameDto.builder()
-                .isOngoing(true)
-                .player1CurrentScore(0)
-                .player2CurrentScore(0)
-                        .deuce(deuceDto)
-                .build());
+        gameDtoList.add(gameDto);
 
         SetDto setDto = SetDto.builder()
                 .isOngoing(true)
@@ -51,28 +51,54 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
                 .games(gameDtoList)
                 .tieBreak(tieBreakDto)
                 .build();
+        return setDto;
+    }
 
+    public MatchDto initNewMatch(MatchTypeDto matchType, PlayerDto playerDto1, PlayerDto playerDto2) {
         List<SetDto> setDtoList = new ArrayList<>();
-        setDtoList.add(setDto);
-
-
-
-        PlayerDto playerDto1 = PlayerDto.builder()
-                .name(player1)
-                .build();
-
-        PlayerDto playerDto2 = PlayerDto.builder()
-                .name(player2)
-                .build();
-
-        return Optional.of(MatchDto.builder()
+        setDtoList.add(initSet());
+        return MatchDto.builder()
                 .playerOne(playerDto1)
                 .playerTwo(playerDto2)
                 .matchType(matchType)
                 .matchState(MatchStateDto.ONGOING)
-                        .sets(setDtoList)
-                .build());
+                .sets(setDtoList)
+                .build();
+    }
 
+    public GameDto initGame(DeuceDto deuceDto) {
+        GameDto gameDto = GameDto.builder()
+                .isOngoing(true)
+                .player1CurrentScore(0)
+                .player2CurrentScore(0)
+                .deuce(deuceDto)
+                .build();
+        return gameDto;
+    }
+
+    private PlayerDto initPlayer(String player) {
+        PlayerDto playerDto = PlayerDto.builder()
+                .name(player)
+                .build();
+        return playerDto;
+    }
+
+    public DeuceDto initDeuce() {
+        DeuceDto deuceDto = DeuceDto.builder()
+                .isOngoing(false)
+                .player1DeuceScore(0)
+                .player2DeuceScore(0)
+                .build();
+        return deuceDto;
+    }
+
+    public TieBreakDto initTieBreak() {
+        TieBreakDto tieBreakDto = TieBreakDto.builder()
+                .isOngoing(false)
+                .player1TieBreakScore(0)
+                .player2TieBreakScore(0)
+                .build();
+        return tieBreakDto;
     }
 
     public void addMatchToDB(WinnerDto winnerDto) {

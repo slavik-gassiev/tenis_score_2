@@ -1,12 +1,16 @@
 package com.slava.util;
 
 import com.slava.dto.*;
+import com.slava.service.NewMatchService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+
+import java.util.List;
 
 
 public class MapperUtil {
     private static final ModelMapper modelMapper = new ModelMapper();
+
 
     static {
         // Настройка правил маппинга для преобразования MatchDto в TableDto
@@ -66,9 +70,23 @@ public class MapperUtil {
 
     // Преобразование MatchDto в TableDto
     public static TableDto mapToTableDto(MatchDto matchDto) {
+        NewMatchService newMatchService = new NewMatchService();
         if (matchDto == null) {
             throw new IllegalArgumentException("MatchDto не может быть null");
         }
+
+        List<GameDto> games = matchDto.getOngoingSet().getGames();
+        if (games.stream().filter(GameDto::getIsOngoing).count() == 0) {
+            games.add(newMatchService.initGame(newMatchService.initDeuce()));
+            matchDto.getOngoingSet().setGames(games);
+        }
+
+        List<SetDto> sets = matchDto.getSets();
+        if (sets.stream().filter(SetDto::getIsOngoing).count() == 0) {
+            sets.add(newMatchService.initSet());
+            matchDto.setSets(sets);
+        }
+
         return modelMapper.map(matchDto, TableDto.class);
     }
 

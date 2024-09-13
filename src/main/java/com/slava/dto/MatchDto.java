@@ -26,7 +26,12 @@ public class MatchDto {
         this.sets.removeIf(setDto -> setDto.getIsOngoing() == true);
     }
     public SetDto getOngoingSet() {
-        return sets.stream().filter(SetDto::getIsOngoing).findFirst().get();
+        Optional<SetDto> set = sets.stream().filter(SetDto::getIsOngoing).findFirst();
+        if (set.isPresent()) {
+            return set.get();
+        } else {
+            throw new RuntimeException("Все сеты завершены");
+        }
     }
 
 }

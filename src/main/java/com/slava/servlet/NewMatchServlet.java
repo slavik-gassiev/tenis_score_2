@@ -40,7 +40,7 @@ public class NewMatchServlet extends HttpServlet {
             matchTypeDto = MatchTypeDto.LONG_GAME;
         }
 
-        Optional<MatchDto> matchDto = newMatchService.initMatch(player1, player2, matchTypeDto);
+        MatchDto matchDto = newMatchService.initMatch(player1, player2, matchTypeDto);
         String uuid = ongoingMatchService.addMatchToTrack(matchDto);
         String redirect = String.format("/tenis_score/ongoing?uuid=%s", uuid);
         resp.sendRedirect(redirect);

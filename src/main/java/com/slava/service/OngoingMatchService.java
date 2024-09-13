@@ -31,14 +31,9 @@ public class OngoingMatchService {
         return  false;
     }
 
-    public String addMatchToTrack(Optional<MatchDto> matchDto) {
-        if(matchDto.isPresent()) {
-           Optional<String> uuid =  matchDAO.addMatch(matchDto.get());
+    public String addMatchToTrack(MatchDto matchDto) {
+           Optional<String> uuid =  matchDAO.addMatch(matchDto);
            return uuid.get();
-        }
-        else {
-            throw new RuntimeException("не удалось сохранить матч в трек лист");
-        }
     }
 
     public MatchDto getMatch(String uuid) {
