@@ -53,10 +53,10 @@
 
         </tr>
         </tbody>
-    </table>
+</table>
 
     <div style="margin-top: 2vh;">
-        <form action="match-score?uuid=${uuid}" method="post" name="scoredform">
+        <form action="/tenis_score/ongoing?uuid=${uuid}" method="post" name="scoredform">
             <button  name ="point_winner" value="player1">${match.player1} scored!</button>
             <button name="point_winner" value="player2">${match.player2} scored!</button>
         </form>

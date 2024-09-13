@@ -43,6 +43,7 @@ public class OngoingMatchServlet extends HttpServlet {
 //        если матч не закончился
         TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
         req.setAttribute("match", tableDto);
+        req.setAttribute("uuid", uuid);
         req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
     }
 
