@@ -40,12 +40,12 @@ public class OngoingMatchServlet extends HttpServlet {
             req.setAttribute("winner", winnerDto);
             req.getRequestDispatcher("/match-result.jsp").forward(req, resp);
         }
-//        если матч не закончился
-
-        TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
-        req.setAttribute("match", tableDto);
-        req.setAttribute("uuid", uuid);
-        req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+        else {
+            TableDto tableDto = MapperUtil.mapToTableDto(matchDto);
+            req.setAttribute("match", tableDto);
+            req.setAttribute("uuid", uuid);
+            req.getRequestDispatcher("/match-score.jsp").forward(req, resp);
+        }
     }
 
     @Override

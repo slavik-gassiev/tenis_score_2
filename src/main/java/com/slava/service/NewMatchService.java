@@ -85,7 +85,6 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
 
     public DeuceDto initDeuce() {
         DeuceDto deuceDto = DeuceDto.builder()
-                .isOngoing(false)
                 .player1DeuceScore(0)
                 .player2DeuceScore(0)
                 .build();
@@ -94,7 +93,6 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
 
     public TieBreakDto initTieBreak() {
         TieBreakDto tieBreakDto = TieBreakDto.builder()
-                .isOngoing(false)
                 .player1TieBreakScore(0)
                 .player2TieBreakScore(0)
                 .build();

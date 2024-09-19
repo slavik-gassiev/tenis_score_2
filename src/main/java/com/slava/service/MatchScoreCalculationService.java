@@ -4,11 +4,9 @@ import com.slava.dao.OngoingMatchDAO;
 import com.slava.dto.*;
 import com.slava.service.interfaces.IMatchScoreCalculationService;
 
-import java.util.List;
-import java.util.Optional;
-
 public class MatchScoreCalculationService implements IMatchScoreCalculationService<MatchDto, String, PlayerDto> {
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
+    private NewMatchService newMatchService = new NewMatchService();
     private OngoingMatchDAO ongoingMatchDAO = new OngoingMatchDAO();
     @Override
     public MatchDto toGoal(String matchId, PlayerDto player) {
@@ -17,13 +15,13 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
         MatchDto match = ongoingMatchService.getMatch(matchId);
 
+        addPoint(player, match);
 
         checkDeuce(match);
         checkTieBreak(match);
-        checkSetWinner(match);
-        checkMatchFinished(match);
-
-        addPoint(player, match);
+        if (match.getMatchState() == MatchStateDto.ONGOING) {
+            checkSetWinner(match);
+        }
 
         return match;
     }
@@ -65,30 +63,38 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
                 }
                 break;
             case 30:
-                if (40 == playerScoreLoser) {
-                    match.setMatchState(MatchStateDto.DEUCE);
-                    return;
-                }
                 if (isPlayer1) {
                     game.setPlayer1CurrentScore(game.getPlayer1CurrentScore() + 10);
                 }
                 else {
                     game.setPlayer2CurrentScore(game.getPlayer2CurrentScore() + 10);
                 }
+                if (40 == playerScoreLoser) {
+                    match.setMatchState(MatchStateDto.DEUCE);
+                    return;
+                }
                 break;
             case 40:
-                if (isPlayer1) {
-                    game.setGameWinner(match.getPlayerOne());
-                    game.setIsOngoing(false);
-                    set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
-
-                } else {
-                    game.setGameWinner(match.getPlayerTwo());
-                    game.setIsOngoing(false);
-                    set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
-                }
+                addGameWinner(match, isPlayer1);
                 return;
 
+        }
+    }
+
+    private void addGameWinner(MatchDto match, Boolean isPlayer1) {
+        SetDto set = match.getOngoingSet();
+        GameDto game = set.getOngoingGame();
+        if (isPlayer1) {
+            game.setGameWinner(match.getPlayerOne());
+            game.setIsOngoing(false);
+            set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
+            set.getGames().add(newMatchService.initGame(newMatchService.initDeuce()));
+
+        } else {
+            game.setGameWinner(match.getPlayerTwo());
+            game.setIsOngoing(false);
+            set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
+            set.getGames().add(newMatchService.initGame(newMatchService.initDeuce()));
         }
     }
 
@@ -134,19 +140,19 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
                 deuce.getPlayer1DeuceScore() - deuce.getPlayer2DeuceScore() >= 2) {
 
             deuce.setDeuceWinner(match.getPlayerOne());
-            deuce.setIsOngoing(false);
             game.setGameWinner(match.getPlayerOne());
             game.setIsOngoing(false);
             set.setPlayer1GameScore(set.getPlayer1GameScore() + 1);
+            match.setMatchState(MatchStateDto.ONGOING);
         }
         else if (deuce.getPlayer2DeuceScore() >= 2 &&
                 deuce.getPlayer2DeuceScore() - deuce.getPlayer1DeuceScore() >= 2) {
 
             deuce.setDeuceWinner(match.getPlayerTwo());
-            deuce.setIsOngoing(false);
             game.setGameWinner(match.getPlayerTwo());
             game.setIsOngoing(false);
             set.setPlayer2GameScore(set.getPlayer2GameScore() + 1);
+            match.setMatchState(MatchStateDto.ONGOING);
         }
     }
 
@@ -157,19 +163,19 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
                 tieBreak.getPlayer1TieBreakScore() - tieBreak.getPlayer2TieBreakScore() >= 2) {
 
             tieBreak.setTieBreakWinner(match.getPlayerOne());
-            tieBreak.setIsOngoing(false);
             set.setSetWinner(match.getPlayerOne());
             set.setIsOngoing(false);
             match.setPlayer1SetsScore(match.getPlayer1SetsScore() + 1);
+            checkMatchFinished(match);
         }
         else if (tieBreak.getPlayer2TieBreakScore() >= 7 &&
                 tieBreak.getPlayer2TieBreakScore() - tieBreak.getPlayer1TieBreakScore() >= 2) {
 
             tieBreak.setTieBreakWinner(match.getPlayerTwo());
-            tieBreak.setIsOngoing(false);
             set.setSetWinner(match.getPlayerTwo());
             set.setIsOngoing(false);
             match.setPlayer2SetsScore(match.getPlayer2SetsScore() + 1);
+            checkMatchFinished(match);
         }
     }
 
@@ -180,12 +186,14 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
             set.setSetWinner(match.getPlayerOne());
             match.setPlayer1SetsScore(match.getPlayer1SetsScore() + 1);
             set.setIsOngoing(false);
+            checkMatchFinished(match);
         }
         else if (set.getPlayer2GameScore() >= 6 &&
                 set.getPlayer2GameScore() - set.getPlayer1GameScore() >= 2) {
             set.setSetWinner(match.getPlayerTwo());
             match.setPlayer2SetsScore(match.getPlayer2SetsScore() + 1);
             set.setIsOngoing(false);
+            checkMatchFinished(match);
         }
         else if (set.getPlayer1GameScore() == 6 &&
                 set.getPlayer2GameScore() == 6) {
@@ -194,7 +202,7 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
     }
 
     private synchronized void checkMatchFinished(MatchDto match) {
-        int goal = match.getMatchType() == MatchTypeDto.SHORT_GAME ? 3 : 6;
+        int goal = match.getMatchType() == MatchTypeDto.SHORT_GAME ? 2 : 2;
 
         if (match.getPlayer1SetsScore() == goal){
             match.setMatchWinner(match.getPlayerOne());
@@ -203,6 +211,10 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         else if (match.getPlayer2SetsScore() == goal) {
             match.setMatchWinner(match.getPlayerTwo());
             match.setMatchState(MatchStateDto.FINISHED);
+        }
+        else {
+            match.getSets().add(newMatchService.initSet());
+            match.setMatchState(MatchStateDto.ONGOING);
         }
     }
 }

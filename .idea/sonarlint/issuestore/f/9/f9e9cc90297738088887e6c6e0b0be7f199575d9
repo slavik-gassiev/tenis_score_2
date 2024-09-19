@@ -1,0 +1,13 @@
+
+g
+java:S20955"EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8™²œ³ 2
+g
+java:S2095<"EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8™²œ³ 2
+g
+java:S2095"EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8™²œ³ 2
+g
+java:S2095("EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8™²œ³ 2
+S
+java:S1128"6Remove this unused import 'jakarta.persistence.Query'.(³¸³æ8Ÿ²œ³ 2
+N
+java:S1128"1Remove this unused import 'org.h2.util.SmallMap'.(‹ÐÇ×8Ÿ²œ³ 2

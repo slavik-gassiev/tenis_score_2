@@ -10,6 +10,4 @@ public class TieBreakDto {
 
     private int player1TieBreakScore;
     private int player2TieBreakScore;
-
-    private Boolean isOngoing;
 }

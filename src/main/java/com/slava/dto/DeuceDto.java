@@ -10,6 +10,4 @@ public class DeuceDto {
 
     private int player1DeuceScore;
     private int player2DeuceScore;
-
-    private Boolean isOngoing;
 }
