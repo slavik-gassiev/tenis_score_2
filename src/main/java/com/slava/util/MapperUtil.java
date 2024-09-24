@@ -76,16 +76,7 @@ public class MapperUtil {
         }
 
         List<GameDto> games = matchDto.getOngoingSet().getGames();
-        if (games.stream().filter(GameDto::getIsOngoing).count() == 0) {
-            games.add(newMatchService.initGame(newMatchService.initDeuce()));
-            matchDto.getOngoingSet().setGames(games);
-        }
-
         List<SetDto> sets = matchDto.getSets();
-        if (sets.stream().filter(SetDto::getIsOngoing).count() == 0) {
-            sets.add(newMatchService.initSet());
-            matchDto.setSets(sets);
-        }
 
         return modelMapper.map(matchDto, TableDto.class);
     }

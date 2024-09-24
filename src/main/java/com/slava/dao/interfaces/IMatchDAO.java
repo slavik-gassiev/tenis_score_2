@@ -8,4 +8,5 @@ public interface IMatchDAO<T, ID> {
     Optional<ID> deleteMatch(ID id);
     List<T> getAll();
     Optional<T> getById(ID id);
+
 }

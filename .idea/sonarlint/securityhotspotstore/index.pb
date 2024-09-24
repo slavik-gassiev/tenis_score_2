@@ -127,3 +127,5 @@ f
 6src/main/java/com/slava/servlet/AllMatchesServlet.java,0\1\01ab5484401d71b75201aef92ebcc1a0a3b2ef0e
 I
 src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded
+Y
+)src/test/java/com/slava/test/DaoTest.java,0\e\0e456d94f941ec264216a1aa4493e4985805a4c6

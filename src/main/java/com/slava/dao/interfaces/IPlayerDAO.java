@@ -1,5 +1,10 @@
 package com.slava.dao.interfaces;
 
-public interface IPlayerDAO<T , ID >{
+import com.slava.entity.Player;
+
+import java.util.Optional;
+
+public interface IPlayerDAO<T , ID, S >{
     ID savePlayer(T player);
+    Optional<T> findPlayerByName(S playerName);
 }

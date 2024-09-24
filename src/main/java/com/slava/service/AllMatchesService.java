@@ -5,14 +5,15 @@ import com.slava.dao.interfaces.IMatchDAO;
 import com.slava.dto.MatchDto;
 import com.slava.dto.TableDto;
 import com.slava.dto.WinnerDto;
+import com.slava.util.HibernateUtil;
 import com.slava.util.MapperUtil;
+import org.hibernate.Session;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AllMatchesService {
-
     IMatchDAO matchDAO = new MatchDAO();
 
     public List<WinnerDto> getAllMatches() {

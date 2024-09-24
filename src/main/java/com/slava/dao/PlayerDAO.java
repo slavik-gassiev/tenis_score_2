@@ -3,14 +3,14 @@ package com.slava.dao;
 import com.slava.dao.interfaces.IPlayerDAO;
 import com.slava.entity.Player;
 import com.slava.util.HibernateUtil;
+import jakarta.persistence.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.OptionalLong;
 
-public class PlayerDAO implements IPlayerDAO<Player, Optional<Long>> {
+public class PlayerDAO implements IPlayerDAO<Player, Optional<Long>, String> {
 
 
     @Override
@@ -29,6 +29,19 @@ public class PlayerDAO implements IPlayerDAO<Player, Optional<Long>> {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public Optional<Player> findPlayerByName(String playerName) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query query = session.createQuery("FROM Player WHERE name = :name", Player.class);
+            query.setParameter("name", playerName);
+            List<Player> players = query.getResultList();
+            return players.isEmpty() ? Optional.empty() : Optional.of(players.get(0));
+        } catch (Exception e) {
             e.printStackTrace();
             return Optional.empty();
         }

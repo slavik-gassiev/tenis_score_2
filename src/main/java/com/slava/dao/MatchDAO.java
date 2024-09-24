@@ -2,6 +2,7 @@ package com.slava.dao;
 
 import com.slava.dao.interfaces.IMatchDAO;
 import com.slava.entity.Match;
+import com.slava.entity.Player;
 import com.slava.util.HibernateUtil;
 import jakarta.persistence.Query;
 import org.h2.util.SmallMap;
@@ -17,50 +18,98 @@ public class MatchDAO implements IMatchDAO<Match, Long> {
     public Optional<Long> saveMatch(Match match) {
         Transaction transaction = null;
         Long id = null;
+        Session session = null;
+
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             session.persist(match);
             id = match.getId();
             transaction.commit();
-
-            return Optional.ofNullable(id);
+            return Optional.of(id);
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
             e.printStackTrace();
             return Optional.empty();
+        } finally {
+            if (session != null) {
+                session.close();  // Закрываем сессию
+            }
         }
     }
 
     @Override
     public Optional<Long> deleteMatch(Long id) {
+        Transaction transaction = null;
+        Session session = null;
+
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            session.createQuery("delete Match where Match.id = :id", Match.class)
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.beginTransaction();
+            session.createQuery("delete from Match where id = :id")
                     .setParameter("id", id)
                     .executeUpdate();
-
+            transaction.commit();
             return Optional.of(id);
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
             return Optional.empty();
+        } finally {
+            if (session != null) {
+                session.close();  // Закрываем сессию
+            }
         }
     }
 
     @Override
     public List<Match> getAll() {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("select m from Match m", Match.class).getResultList();
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session.createQuery("from Match", Match.class).getResultList();
+        } finally {
+            if (session != null) {
+                session.close();  // Закрываем сессию
+            }
+        }
     }
 
     @Override
     public Optional<Match> getById(Long id) {
+        Session session = null;
         try {
-            Session session = HibernateUtil.getSessionFactory().openSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             return Optional.ofNullable(session.get(Match.class, id));
-        }catch (Exception e) {
+        } catch (Exception e) {
+            e.printStackTrace();
             return Optional.empty();
+        } finally {
+            if (session != null) {
+                session.close();  // Закрываем сессию
+            }
+        }
+    }
+
+    public Player findOrCreatePlayer(String playerName) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query query = session.createQuery("FROM Player WHERE name = :name", Player.class);
+        query.setParameter("name", playerName);
+        List<Player> players = query.getResultList();
+
+        if (!players.isEmpty()) {
+            return players.get(0); // Возвращаем существующего игрока
+        } else {
+            Player newPlayer = new Player();
+            newPlayer.setName(playerName);
+            session.beginTransaction();
+            session.save(newPlayer);
+            session.getTransaction().commit();
+            return newPlayer; // Возвращаем нового игрока
         }
     }
 }

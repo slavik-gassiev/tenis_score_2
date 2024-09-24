@@ -1,20 +1,26 @@
 package com.slava.service;
 
 import com.slava.dao.MatchDAO;
+import com.slava.dao.PlayerDAO;
 import com.slava.dao.interfaces.IMatchDAO;
+import com.slava.dao.interfaces.IPlayerDAO;
 import com.slava.dto.*;
 import com.slava.entity.Match;
 import com.slava.entity.Player;
 import com.slava.service.interfaces.INewMatchService;
+import com.slava.util.HibernateUtil;
+import jakarta.servlet.annotation.WebServlet;
+import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalLong;
 
 public class NewMatchService implements INewMatchService<MatchDto, String, MatchTypeDto> {
-
-    IMatchDAO matchDAO = new MatchDAO();
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
+    private IMatchDAO matchDAO = new MatchDAO();
+    private IPlayerDAO playerDAO = new PlayerDAO();
 
     public MatchDto initMatch(String player1, String player2, MatchTypeDto matchType) {
         if (ongoingMatchService.isPlayerInMatches(player1)) {
@@ -100,24 +106,40 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
     }
 
     public void addMatchToDB(WinnerDto winnerDto) {
-        Player winner = Player.builder()
-                .name(winnerDto.getMatchWinnerName())
-                .build();
-        Player playerOne = Player.builder()
-                .name(winnerDto.getPlayer1Name())
-                .build();
-        Player playerTwo = Player.builder()
-                .name(winnerDto.getPlayer2Name())
-                .build();
+        Player playerOne = null;
+        Player playerTwo = null;
+
+        Optional<Player> playerOneDao = playerDAO.findPlayerByName(winnerDto.getPlayer1Name());
+        if (playerOneDao.isPresent()){
+            playerOne = playerOneDao.get();
+        }
+        else {
+            playerOne = Player.builder()
+                    .name(winnerDto.getPlayer1Name())
+                    .build();
+        }
+
+        Optional<Player> playerTwoDao = playerDAO.findPlayerByName(winnerDto.getPlayer2Name());
+        if (playerTwoDao.isPresent()){
+            playerTwo = playerTwoDao.get();
+        }
+        else {
+            playerTwo = Player.builder()
+                    .name(winnerDto.getPlayer2Name())
+                    .build();
+        }
+
 
         Match match = Match.builder()
-                .winner(winner)
+                .winner(winnerDto.getMatchWinnerName() == playerOne.getName() ? playerOne : playerOne)
                 .player1(playerOne)
                 .player2(playerTwo)
                 .build();
 
+
+
         try {
-            matchDAO.saveMatch(match);
+            Optional<Long> matchId = matchDAO.saveMatch(match);
         } catch (Exception e) {
             throw new RuntimeException("Не удалось сохранить матч в базу Hibernate" + e);
         }
