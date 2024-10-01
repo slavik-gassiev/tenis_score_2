@@ -1,0 +1,42 @@
+
+b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(×‹”Ü8Â“Œ÷¡2
+g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ÒË¼“ûÿÿÿÿ8Â“Œ÷¡2
+c	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(…íòÈ8Â“Œ÷¡2
+Q
+java:S3740"/Provide the parametrized type for this generic.(ÓÄŸêûÿÿÿÿ8Â“Œ÷¡2
+Q
+java:S3740"/Provide the parametrized type for this generic.(¾–‰ñşÿÿÿÿ8Â“Œ÷¡2
+{
+java:S14885"^Immediately return this expression instead of assigning it to the temporary variable "setDto".(¯ü¤÷8Â“Œ÷¡2
+
+java:S1488L"_Immediately return this expression instead of assigning it to the temporary variable "gameDto".(¡íÃ€úÿÿÿÿ8Â“Œ÷¡2
+}
+java:S1488V"aImmediately return this expression instead of assigning it to the temporary variable "playerDto".(—ö¶48Â“Œ÷¡2
+}
+java:S1488]"`Immediately return this expression instead of assigning it to the temporary variable "deuceDto".(¦ö‰×8Â“Œ÷¡2
+€
+java:S1488e"cImmediately return this expression instead of assigning it to the temporary variable "tieBreakDto".(´Ïúâ8Â“Œ÷¡2
+E
+java:S5411"(Use a primitive boolean expression here.(§°ø8Â“Œ÷¡2
+J
+java:S5411"(Use a primitive boolean expression here.(Ü¯€İøÿÿÿÿ8Â“Œ÷¡2
+_
+java:S4973†"<Strings and Boxed types should be compared using "equals()".(æÒ½şÿÿÿÿ8­­Œ÷¡2
+\
+java:S1854!":Remove this useless assignment to local variable "setDto".(¾Íóüÿÿÿÿ8Ò“Œ÷¡2
+M
+java:S1481!"+Remove this unused "setDto" local variable.(¾Íóüÿÿÿÿ8Ò“Œ÷¡2
+^
+java:S1854";Remove this useless assignment to local variable "matchId".(“¯åìúÿÿÿÿ8Ò“Œ÷¡2
+€
+java:S3923†"]This conditional operation returns the same value whether the condition is "true" or "false".(æÒ½şÿÿÿÿ8Ì­Œ÷¡2
+O
+java:S1481",Remove this unused "matchId" local variable.(“¯åìúÿÿÿÿ8á“Œ÷¡2
+V
+java:S1128"9Remove this unused import 'com.slava.util.HibernateUtil'.(±Áåİ8¹’½¥¢2
+_
+java:S1128"BRemove this unused import 'jakarta.servlet.annotation.WebServlet'.(½¢¢¸8¹’½¥¢2
+T
+java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8¹’½¥¢2
+U
+java:S1128"3Remove this unused import 'java.util.OptionalLong'.(ì·ößÿÿÿÿÿ8«ÿÄ¥¢2

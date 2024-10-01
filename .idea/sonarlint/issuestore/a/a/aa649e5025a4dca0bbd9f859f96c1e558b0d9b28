@@ -1,0 +1,15 @@
+
+\
+java:S1118":Add a private constructor to hide the implicit public one.(»«…òıÿÿÿÿ8ÃÓ±á2
+`
+java:S1854I"CRemove this useless assignment to local variable "newMatchService".(ä©¤›8™Úõş 2
+U
+java:S1854O"8Remove this useless assignment to local variable "sets".(Œ·šş8µµõş 2
+[
+java:S1854N"9Remove this useless assignment to local variable "games".(¡šğÛúÿÿÿÿ8™Úõş 2
+Q
+java:S1481I"4Remove this unused "newMatchService" local variable.(ä©¤›8™Úõş 2
+L
+java:S1481N"*Remove this unused "games" local variable.(¡šğÛúÿÿÿÿ8™Úõş 2
+F
+java:S1481O")Remove this unused "sets" local variable.(Œ·šş8Åµõş 2

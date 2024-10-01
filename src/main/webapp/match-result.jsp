@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>\
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Match Result</title>
@@ -31,7 +31,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="set" items="${winner.sets}" varStatus="status">
+        <c:forEach var="set" items="${winner.getSets()}" varStatus="status">
             <tr>
                 <td>${status.index + 1}</td>
                 <td>${set.setWinner.name}</td>
@@ -60,9 +60,11 @@
                 <td>
                     <c:forEach var="game" items="${set.games}">
                         <c:if test="${game.deuce != null}">
+                            <c:if test="${game.deuce.deuceWinner != null}">
                             Deuce Winner: ${game.deuce.deuceWinner.name},
                             Player 1 Score: ${game.deuce.player1DeuceScore},
                             Player 2 Score: ${game.deuce.player2DeuceScore}
+                            </c:if>
                         </c:if>
                     </c:forEach>
                 </td>

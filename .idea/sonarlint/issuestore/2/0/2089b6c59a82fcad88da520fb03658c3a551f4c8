@@ -1,0 +1,17 @@
+
+g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(‰ø ûÿÿÿÿ8ŒÌÖß2
+L
+java:S3740"/Provide the parametrized type for this generic.(¼»ôœ8ÌÖß2
+o
+java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8»Şä±2
+d
+java:S1612"GReplace this lambda with method reference 'MapperUtil::mapToWinnerDto'.(³ú©8»Şä±2
+P
+java:S1128"3Remove this unused import 'com.slava.dto.TableDto'.(š•¾›8†‚üó¡2
+V
+java:S1128"9Remove this unused import 'com.slava.util.HibernateUtil'.(±Áåİ8“´œõ¡2
+T
+java:S1128
+"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8“´œõ¡2
+Q
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8†‚üó¡2

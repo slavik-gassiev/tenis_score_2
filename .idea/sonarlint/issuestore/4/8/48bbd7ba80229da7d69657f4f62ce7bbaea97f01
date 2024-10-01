@@ -1,0 +1,17 @@
+
+J
+java:S5411$"(Use a primitive boolean expression here.(®îù¡şÿÿÿÿ8Ù¥Œ³ 2
+R
+java:S1948"5Make "ongoingMatchService" transient or serializable.(´ÛÑì8â¥Œ³ 2
+N
+java:S1948"1Make "newMatchService" transient or serializable.(ä©¤›8â¥Œ³ 2
+`
+java:S1948">Make "matchScoreCalculationService" transient or serializable.(õíŸØúÿÿÿÿ8â¥Œ³ 2
+P
+java:S1948"3Make "validationService" transient or serializable.(ö‡‡¸8â¥Œ³ 2
+e
+java:S1128"HRemove this unused import 'com.fasterxml.jackson.databind.ObjectMapper'.(´‘¨™8¹¢ê¥¢2
+W
+java:S1128"5Remove this unused import 'java.rmi.RemoteException'.(Ä÷àÿÿÿÿÿ8º¢ê¥¢2
+Q
+java:S1128"/Remove this unused import 'java.util.Optional'.(¨˜ëİüÿÿÿÿ8º¢ê¥¢2
