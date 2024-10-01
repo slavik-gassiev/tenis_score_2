@@ -24,10 +24,11 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         addPoint(player, match);
 
         checkSetWinner(match);
-        if (match.getMatchState() == MatchStateDto.ONGOING) {
+        if (match.getMatchState() != MatchStateDto.FINISHED) {
             checkTieBreak(match);
             checkDeuce(match);
         }
+
 
         return match;
     }
@@ -233,9 +234,6 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
         if (match.getPlayer2SetsScore() == goal) {
             match.setMatchWinner(match.getPlayerTwo());
             match.setMatchState(MatchStateDto.FINISHED);
-        }
-        else {
-            match.setMatchState(MatchStateDto.ONGOING);
         }
         if(match.getMatchState() == MatchStateDto.ONGOING) {
             List<SetDto> sets = match.getSets();
