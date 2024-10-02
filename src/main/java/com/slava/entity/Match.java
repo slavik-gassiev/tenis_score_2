@@ -3,6 +3,10 @@ package com.slava.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,6 +27,12 @@ public class Match {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Winner")
     private Player winner;
+
+    private int player1SetsScore;
+    private int player2SetsScore;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Set> sets;
 
     public Match(Player player1, Player player2) {
         this.player1 = player1;
