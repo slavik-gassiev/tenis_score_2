@@ -12,10 +12,10 @@ java:S49738"<Strings and Boxed types should be compared using "equals()".(® ¨–û
 java:S4973?"<Strings and Boxed types should be compared using "equals()".(¡¬Öùÿÿÿÿ8‰¬¤à2
 Y
 java:S4973@"<Strings and Boxed types should be compared using "equals()".(ÒõÒê8‰¬¤à2
-j
-java:S3655$"HCall "uuid.isPresent()" or "!uuid.isEmpty()" before accessing the value.(»Ÿàîøÿÿÿÿ8“¬¤à2
 m
 java:S3655_"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(Ë¿ç‰8“¬¤à2
+j
+java:S3655$"HCall "uuid.isPresent()" or "!uuid.isEmpty()" before accessing the value.(»Ÿàîøÿÿÿÿ8“¬¤à2
 p
 java:S3008"SRename this field "INSTANCE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Áïˆö8™¬¤à2
 »

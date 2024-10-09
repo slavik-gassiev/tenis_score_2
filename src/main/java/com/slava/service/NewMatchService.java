@@ -5,8 +5,7 @@ import com.slava.dao.PlayerDAO;
 import com.slava.dao.interfaces.IMatchDAO;
 import com.slava.dao.interfaces.IPlayerDAO;
 import com.slava.dto.*;
-import com.slava.entity.Match;
-import com.slava.entity.Player;
+import com.slava.entity.*;
 import com.slava.service.interfaces.INewMatchService;
 import com.slava.util.HibernateUtil;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalLong;
+import java.util.stream.Collectors;
 
 public class NewMatchService implements INewMatchService<MatchDto, String, MatchTypeDto> {
     private OngoingMatchService ongoingMatchService = OngoingMatchService.getInstance();
@@ -106,35 +106,57 @@ public class NewMatchService implements INewMatchService<MatchDto, String, Match
     }
 
     public void addMatchToDB(WinnerDto winnerDto) {
-        Player playerOne = null;
-        Player playerTwo = null;
 
-        Optional<Player> playerOneDao = playerDAO.findPlayerByName(winnerDto.getPlayer1Name());
-        if (playerOneDao.isPresent()){
-            playerOne = playerOneDao.get();
-        }
-        else {
-            playerOne = Player.builder()
-                    .name(winnerDto.getPlayer1Name())
-                    .build();
-        }
+        Player playerOne = (Player) playerDAO.findPlayerByName(winnerDto.getPlayer1Name())
+                .orElseGet(() -> Player.builder()
+                        .name(winnerDto.getPlayer1Name())
+                        .build());
 
-        Optional<Player> playerTwoDao = playerDAO.findPlayerByName(winnerDto.getPlayer2Name());
-        if (playerTwoDao.isPresent()){
-            playerTwo = playerTwoDao.get();
-        }
-        else {
-            playerTwo = Player.builder()
-                    .name(winnerDto.getPlayer2Name())
-                    .build();
-        }
+        Player playerTwo = (Player) playerDAO.findPlayerByName(winnerDto.getPlayer2Name())
+                .orElseGet(() -> Player.builder()
+                        .name(winnerDto.getPlayer2Name())
+                        .build());
 
+// Создаем список сетов, используя playerOne и playerTwo вместо Optional
+        List<Set> sets = winnerDto.getSets().stream()
+                .map(setDto -> Set.builder()
+                        .setWinner(setDto.getSetWinner().getName().equals(playerOne.getName()) ? playerOne : playerTwo)
+                        .player1GameScore(setDto.getPlayer1GameScore())
+                        .player2GameScore(setDto.getPlayer2GameScore())
+                        .tieBreak(TieBreak.builder()
+                                .tieBreakWinner(setDto.getTieBreak().getTieBreakWinner() != null &&
+                                        setDto.getTieBreak().getTieBreakWinner().getName().equals(playerOne.getName())
+                                        ? playerOne : playerTwo)
+                                .player1TieBreakScore(setDto.getTieBreak().getPlayer1TieBreakScore())
+                                .player2TieBreakScore(setDto.getTieBreak().getPlayer2TieBreakScore())
+                                .build())
+                        .games(setDto.getGames().stream()
+                                .map(gameDto -> Game.builder()
+                                        .gameWinner(gameDto.getGameWinner() != null &&
+                                                gameDto.getGameWinner().getName().equals(playerOne.getName())
+                                                ? playerOne : playerTwo)
+                                        .player1CurrentScore(gameDto.getPlayer1CurrentScore())
+                                        .player2CurrentScore(gameDto.getPlayer2CurrentScore())
+                                        .deuce(Deuce.builder()
+                                                .deuceWinner(gameDto.getDeuce().getDeuceWinner() != null &&
+                                                        gameDto.getDeuce().getDeuceWinner().getName().equals(playerOne.getName())
+                                                        ? playerOne : playerTwo)
+                                                .player1DeuceScore(gameDto.getDeuce().getPlayer1DeuceScore())
+                                                .player2DeuceScore(gameDto.getDeuce().getPlayer2DeuceScore())
+                                                .build())
+                                        .build())
+                                .collect(Collectors.toList()))
+                        .build())
+                .collect(Collectors.toList());
 
+// Создаем объект Match, используя playerOne и playerTwo
         Match match = Match.builder()
-                .winner(winnerDto.getMatchWinnerName() == playerOne.getName() ? playerOne : playerOne)
+                .winner(winnerDto.getMatchWinnerName().equals(playerOne.getName()) ? playerOne : playerTwo)
                 .player1(playerOne)
                 .player2(playerTwo)
+                .sets(sets)
                 .build();
+
 
 
 

@@ -297,3 +297,11 @@ G.idea/sonarlint/issuestore/4/4/444c11424f1e603063ba9b5448795eb5b3206f22,6\a\6a
 Q.idea/sonarlint/securityhotspotstore/a/0/a0cc754f246e0ee882abadba9c4be8a082227ef4,7\9\799a77d1931939c24e8b46c8a9dc485d511ed4ee
 w
 G.idea/sonarlint/issuestore/d/c/dc51dde5cd19f63bd1c517686081d9bc1d7e3932,3\8\387f14edb1e773e2b3333268c85a04b8ecfa9027
+Y
+)src/main/java/com/slava/entity/Deuce.java,c\4\c40a917bf908eba9cefbd66ac9cc8f8347555166
+X
+(src/main/java/com/slava/entity/Game.java,9\d\9d206703868f9687ab395c3ec2f6a4aa4dc2c304
+W
+'src/main/java/com/slava/entity/Set.java,9\9\9969318dad61777d4b4e0c24726976571a5a592d
+\
+,src/main/java/com/slava/entity/TieBreak.java,e\6\e6b0ee0c33f8741d3348997c38f09ffaaeb28ad3

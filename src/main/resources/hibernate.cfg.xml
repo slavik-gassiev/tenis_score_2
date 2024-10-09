@@ -29,6 +29,10 @@
 
     <mapping class="com.slava.entity.Player"/>
     <mapping class="com.slava.entity.Match"/>
+    <mapping class="com.slava.entity.Set"/>
+    <mapping class="com.slava.entity.Game"/>
+    <mapping class="com.slava.entity.TieBreak"/>
+    <mapping class="com.slava.entity.Deuce"/>
 
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->

@@ -114,20 +114,18 @@ public class MatchScoreCalculationService implements IMatchScoreCalculationServi
 
     private void addTieBreakPoint(PlayerDto player, MatchDto match) {
         TieBreakDto tieBreak = match.getOngoingSet().getTieBreak();
-        if (match.getPlayerOne().getName() == player.getName()) {
+        if (match.getPlayerOne().getName().equals(player.getName())) {
             tieBreak.setPlayer1TieBreakScore(tieBreak.getPlayer1TieBreakScore() + 1);
-        }
-        else if (match.getPlayerTwo().getName() == player.getName()) {
+        } else if (match.getPlayerTwo().getName().equals(player.getName())) {
             tieBreak.setPlayer2TieBreakScore(tieBreak.getPlayer2TieBreakScore() + 1);
         }
     }
 
     private void addDeucePoint(PlayerDto player, MatchDto match) {
         DeuceDto deuce = match.getOngoingSet().getOngoingGame().getDeuce();
-        if (match.getPlayerOne().getName() == player.getName()) {
+        if (match.getPlayerOne().getName().equals(player.getName())) {
             deuce.setPlayer1DeuceScore(deuce.getPlayer1DeuceScore() + 1);
-        }
-        else if (match.getPlayerTwo().getName() == player.getName()) {
+        } else if (match.getPlayerTwo().getName().equals(player.getName())) {
             deuce.setPlayer2DeuceScore(deuce.getPlayer2DeuceScore() + 1);
         }
     }
