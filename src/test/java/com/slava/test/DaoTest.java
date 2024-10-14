@@ -38,6 +38,7 @@ public class DaoTest {
 
             session.persist(match);
             id = match.getId();
+            Match match1 = session.get(Match.class, id);
             transaction.commit();
 
         } catch (Exception e) {

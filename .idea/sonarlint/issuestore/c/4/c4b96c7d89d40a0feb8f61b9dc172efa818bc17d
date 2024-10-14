@@ -1,41 +1,33 @@
 
-c	java:S112Œ"FDefine and throw a dedicated exception instead of using a generic one.(È«¢8¶á½Ê¤2
-c	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(×ùÏ«8¶á½Ê¤2
+c	java:S112Š"FDefine and throw a dedicated exception instead of using a generic one.(È«¢8ºˆˆ§2
+c	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(×ùÏ«8ºˆˆ§2
 J
-java:S54114"(Use a primitive boolean expression here.(°”òÿúÿÿÿÿ8¸á½Ê¤2
+java:S54114"(Use a primitive boolean expression here.(°”òÿúÿÿÿÿ8¼ˆˆ§2
 J
-java:S54115"(Use a primitive boolean expression here.(˜§«Îıÿÿÿÿ8¸á½Ê¤2
+java:S54115"(Use a primitive boolean expression here.(˜§«Îıÿÿÿÿ8¼ˆˆ§2
 E
-java:S5411<"(Use a primitive boolean expression here.( —ÙÉ8¹á½Ê¤2
+java:S5411<"(Use a primitive boolean expression here.( —ÙÉ8½ˆˆ§2
 E
-java:S5411D"(Use a primitive boolean expression here.( —ÙÉ8¹á½Ê¤2
+java:S5411D"(Use a primitive boolean expression here.( —ÙÉ8½ˆˆ§2
 E
-java:S5411L"(Use a primitive boolean expression here.( —ÙÉ8¹á½Ê¤2
+java:S5411L"(Use a primitive boolean expression here.( —ÙÉ8½ˆˆ§2
 E
-java:S5411`"(Use a primitive boolean expression here.( —ÙÉ8¹á½Ê¤2
+java:S5411`"(Use a primitive boolean expression here.( —ÙÉ8½ˆˆ§2
 J
-java:S5411e"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8ºá½Ê¤2
+java:S5411e"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8¾ˆˆ§2
 J
-java:S5411m"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8ºá½Ê¤2
+java:S5411m"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8¾ˆˆ§2
 K
-java:S5411‹"(Use a primitive boolean expression here.(ÑÃÄúÿÿÿÿ8ºá½Ê¤2
+java:S5411‰"(Use a primitive boolean expression here.(ÑÃÄúÿÿÿÿ8¾ˆˆ§2
 K
-java:S5411"(Use a primitive boolean expression here.(ô•ñ¤ıÿÿÿÿ8»á½Ê¤2
+java:S5411Œ"(Use a primitive boolean expression here.(ô•ñ¤ıÿÿÿÿ8¾ˆˆ§2
 K
-java:S5411 "(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8»á½Ê¤2
+java:S5411"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8¾ˆˆ§2
 K
-java:S5411­"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8»á½Ê¤2
-Y
-java:S4973u"<Strings and Boxed types should be compared using "equals()".(ÅÌƒÏ8»á½Ê¤2
-^
-java:S4973x"<Strings and Boxed types should be compared using "equals()".(”°Á¨øÿÿÿÿ8¼á½Ê¤2
-Y
-java:S4973"<Strings and Boxed types should be compared using "equals()".(ÅÌƒÏ8¼á½Ê¤2
-_
-java:S4973‚"<Strings and Boxed types should be compared using "equals()".(”°Á¨øÿÿÿÿ8¼á½Ê¤2
-=	java:S131:""Add a default case to this switch.(ñ­à8âá½Ê¤2
-X	java:S1257"<This block of commented-out lines of code should be removed.(ÜÌô8âá½Ê¤2
+java:S5411«"(Use a primitive boolean expression here.(Ü“Ù±ıÿÿÿÿ8¾ˆˆ§2
+=	java:S131:""Add a default case to this switch.(ñ­à8õˆˆ§2
+X	java:S1257"<This block of commented-out lines of code should be removed.(ÜÌô8õˆˆ§2
 €
-java:S3923á"]This conditional operation returns the same value whether the condition is "true" or "false".(à³úüÿÿÿÿ8ğá½Ê¤2
+java:S3923ß"]This conditional operation returns the same value whether the condition is "true" or "false".(à³úüÿÿÿÿ8…ˆˆ§2
 P
-java:S1068"3Remove this unused "ongoingMatchDAO" private field.(•™Şî8òá½Ê¤2
+java:S1068"3Remove this unused "ongoingMatchDAO" private field.(•™Şî8‰ˆˆ§2

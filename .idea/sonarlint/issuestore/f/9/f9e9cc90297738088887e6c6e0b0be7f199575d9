@@ -1,9 +1,12 @@
 
+m	java:S117K"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ğ±ä¸8È·á§2
+
+java:S1488K"bImmediately return this expression instead of assigning it to the temporary variable "from_match".(ğ±ä¸8ó€‘á§2
 g
-java:S2095c"EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8’ø¸õ¡2
+java:S2095e"EUse try-with-resources or close this "Session" in a "finally" clause.(íÊ‹ƒúÿÿÿÿ8’ø¸õ¡2
 U
 java:S18743"3Remove this use of "createQuery"; it is deprecated.(»†¥–şÿÿÿÿ8’ø¸õ¡2
 N
-java:S1874n",Remove this use of "save"; it is deprecated.(Ô²Ø­ûÿÿÿÿ8’ø¸õ¡2
+java:S1874p",Remove this use of "save"; it is deprecated.(Ô²Ø­ûÿÿÿÿ8’ø¸õ¡2
 N
 java:S1128"1Remove this unused import 'org.h2.util.SmallMap'.(‹ĞÇ×8’ø¸õ¡2

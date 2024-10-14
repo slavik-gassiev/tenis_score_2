@@ -1,7 +1,7 @@
 
 b	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(×‹”Ü8Ù°æ¦2
 g	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(ÒË¼“ûÿÿÿÿ8Ù°æ¦2
-c	java:S112 "FDefine and throw a dedicated exception instead of using a generic one.(…íòÈ8Ù°æ¦2
+c	java:S112¦"FDefine and throw a dedicated exception instead of using a generic one.(…íòÈ8Ù°æ¦2
 Q
 java:S3740"/Provide the parametrized type for this generic.(ÓÄŸêûÿÿÿÿ8Ù°æ¦2
 Q
@@ -25,10 +25,19 @@ java:S1854!":Remove this useless assignment to local variable "setDto".(¾Íóüÿÿ
 M
 java:S1481!"+Remove this unused "setDto" local variable.(¾Íóüÿÿÿÿ8Ù°æ¦2
 ^
-java:S1854";Remove this useless assignment to local variable "matchId".(“¯åìúÿÿÿÿ8¢Ù°æ¦2
-s
-java:S2159"VRemove this call to "equals"; comparisons between unrelated types always return false.(ìİ¶Á8¥Ù°æ¦2
+java:S1854¤";Remove this useless assignment to local variable "matchId".(“¯åìúÿÿÿÿ8¢Ù°æ¦2
 p
-java:S6204"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(äÒˆ8¥Ù°æ¦2
+java:S6204–"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8‹Ü‡§2
+p
+java:S6204”"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(äÒˆ8¥Ù°æ¦2
 O
-java:S1481",Remove this unused "matchId" local variable.(“¯åìúÿÿÿÿ8§Ù°æ¦2
+java:S1481¤",Remove this unused "matchId" local variable.(“¯åìúÿÿÿÿ8§Ù°æ¦2
+V
+java:S1128
+"9Remove this unused import 'com.slava.util.HibernateUtil'.(±Áåİ8Í‹Ü‡§2
+_
+java:S1128"BRemove this unused import 'jakarta.servlet.annotation.WebServlet'.(½¢¢¸8Í‹Ü‡§2
+T
+java:S1128"2Remove this unused import 'org.hibernate.Session'.(È¹›§ùÿÿÿÿ8Í‹Ü‡§2
+U
+java:S1128"3Remove this unused import 'java.util.OptionalLong'.(ì·ößÿÿÿÿÿ8Í‹Ü‡§2

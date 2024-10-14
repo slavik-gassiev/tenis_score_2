@@ -1,13 +1,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>All Matches</title>
 </head>
 <body>
+
 <h1>All Matches</h1>
-    <tbody>
-    <c:forEach var="match" items="${matches}">
-        <h2>Sets Information</h2>
+
+<!-- Отображение информации о всех матчах -->
+<c:forEach var="winner" items="${matches}">
+    <div>
+        <h2>Winner: ${winner.matchWinnerName}</h2>
+        <p>Player 1: ${winner.player1Name} (Sets Score: ${winner.player1SetsScore})</p>
+        <p>Player 2: ${winner.player2Name} (Sets Score: ${winner.player2SetsScore})</p>
+    </div>
+
+    <!-- Отображение информации о сетах для каждого матча -->
+    <div>
+        <h3>Sets Information</h3>
         <table border="1">
             <thead>
             <tr>
@@ -21,7 +32,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="set" items="${match.getSets()}" varStatus="status">
+            <c:forEach var="set" items="${winner.getSets()}" varStatus="status">
                 <tr>
                     <td>${status.index + 1}</td>
                     <td>${set.setWinner.name}</td>
@@ -63,9 +74,11 @@
             </tbody>
         </table>
     </div>
-    </c:forEach>
-    </tbody>
-</table>
-<%--<a href="${pageContext.request.contextPath}/index.jsp">Back to Home</a>--%>
+    <br>
+</c:forEach>
+
+<a href="http://localhost:8080/tenis_score/new">Начать матч</a>
+<br>
+<a href="http://localhost:8080/tenis_score/all">Посмотреть все матчи</a>
 </body>
 </html>

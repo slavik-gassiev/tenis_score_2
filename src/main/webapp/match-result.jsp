@@ -73,6 +73,9 @@
         </tbody>
     </table>
 </div>
-
+<br>
+<a href="http://localhost:8080/tenis_score/new">Начать матч</a>
+<br>
+<a href="http://localhost:8080/tenis_score/all">Посмотреть все матчи</a>
 </body>
 </html>

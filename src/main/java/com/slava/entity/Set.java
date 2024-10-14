@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "Set")
+@Table(name = "SetEntity")
 public class Set {
 
     @Id
@@ -23,10 +23,10 @@ public class Set {
     @ManyToOne
     private Player setWinner;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TieBreak tieBreak;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Game> games;
 
     private int player1GameScore;

@@ -71,7 +71,9 @@ public class MatchDAO implements IMatchDAO<Match, Long> {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            return session.createQuery("from Match", Match.class).getResultList();
+
+            List<Match> from_match = session.createQuery("from Match", Match.class).getResultList();
+            return from_match;
         } finally {
             if (session != null) {
                 session.close();  // Закрываем сессию

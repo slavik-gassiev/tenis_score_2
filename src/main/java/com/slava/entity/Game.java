@@ -21,7 +21,7 @@ public class Game {
     @ManyToOne
     private Player gameWinner;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Deuce deuce;
 
     private int player1CurrentScore;
